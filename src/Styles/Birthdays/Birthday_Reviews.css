@@ -22,6 +22,145 @@ BACK BUTTON
   margin-bottom: 15px;
   color: var(--text-color);
 }
+/* ===== MAIN ===== */
+.birthday_reviews_main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* ===== BACK BTN ===== */
+.birthday_reviews_back {
+  font-size: 22px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+/* ===== SUMMARY ===== */
+.reviews_summary {
+  display: flex;
+  justify-content: space-between;
+  background: var(--card_color);
+  padding: 30px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+
+/* LEFT */
+.summary_left h1 {
+  font-size: 60px;
+  margin: 0;
+  color: var(--text-color);
+}
+
+.summary_left p {
+  opacity: 0.7;
+}
+
+.summary_stars {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+/* RIGHT */
+.summary_right {
+  width: 45%;
+}
+
+.rating_bar_row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.rating_bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rating_fill {
+  width: 0%;
+  height: 100%;
+  background: var(--text-color);
+}
+
+.rating_fill.active {
+  width: 100%;
+}
+
+/* ===== GRID ===== */
+.reviews_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
+.review_card_main {
+  background: var(--card_color);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.review_username {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+.review_card_rating {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.review_card_comment {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.85;
+  color: var(--text-color);
+}
+
+/* ===== STARS ===== */
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .reviews_grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .reviews_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews_summary {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .birthday_reviews_main{
+    padding: 15px !important;
+    
+  }
+  .birthday_reviews_back{
+    top: 0px !important;
+  }
+  .reviews_summary{
+    margin-top: 30px !important;
+  }
+}
 
 /* ===============================
 HEADER SECTION
