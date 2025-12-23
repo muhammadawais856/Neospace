@@ -1,0 +1,169 @@
+/* ===============================
+PROFILE MAIN CONTAINER
+=============================== */
+.profile_main {
+    
+    padding: 30px 80px;
+  max-width: 1250px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* ===============================
+PROFILE OUTER (LEFT + RIGHT)
+=============================== */
+.profile_outer {
+    margin-bottom: 100px;
+    margin-top: 50px;
+    display: flex;
+    gap: 50px;
+    box-sizing: border-box;
+}
+
+/* ===============================
+LEFT SECTION (IMAGE)
+=============================== */
+.profile_left {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.profile_image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.profile_base_img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background-color: var(--bg_color);
+}
+
+/* ===============================
+RIGHT SECTION (DETAILS)
+=============================== */
+.profile_right {
+    flex: 0 0 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* -------------------------------
+HEADER (NAME + EDIT ICON)
+---------------------------------*/
+.profile_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile_name h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.profile_edit {
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--text_color);
+}
+
+/* -------------------------------
+CREDITS SECTION
+---------------------------------*/
+.profile_credits {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: var(--bg_color);
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.logo2 {
+    width: 30px;
+    height: 30px;
+}
+
+.credits {
+    margin: 0;
+    font-size: 16px;
+}
+
+.credits_value {
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+/* -------------------------------
+PROFILE DETAILS (TEXTFIELDS)
+---------------------------------*/
+.profile_details {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.profiletitle {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: var(--color5);
+    font-weight: 500;
+}
+
+.profile_titleinput {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    background-color:var(--bg_color);
+    color: var(--text2-color);
+}
+
+/* Editable input (active) */
+.profile_titleinput:enabled {
+    color: var(--text_color); /* active text color */
+}
+
+/* Non-editable input (disabled) */
+.profile_titleinput:disabled {
+    color: var(--text2-color); /* deactive text color */
+}
+
+/* -------------------------------
+SAVE BUTTON
+---------------------------------*/
+.profile_btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* ===============================
+RESPONSIVE DESIGN
+=============================== */
+@media (max-width: 500px) {
+    .profile_outer {
+        flex-direction: column;
+    }
+
+    .profile_left, 
+    .profile_right {
+        flex: 0 0 100%;
+    }
+
+    .profile_image {
+        max-width: 100%;
+    }
+}

@@ -1,38 +1,95 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Krona+One&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Light Mode (default) */
+/* Prevent horizontal scroll globally */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Only box-sizing, no bg */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Body background */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+:root {
+    --color1: #FD5901;
+    --color2: #F78104;
+    --color3: #FAAB36;
+    --color4: #249EA0;
+    --color5: #008083;
+    --color6: #005F60;
+    --card_color: #e1e4e4;
+    --desc_color: #6f6f6f;
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --text2-color: #5a5e5ec3;
+    --box_shadow: 0 8px 28px rgba(20, 20, 20, 0.14);
 }
 
-.App-link {
-  color: #61dafb;
+/* Dark Mode */
+[data-theme="dark"] {
+    --color1: #FD5901; /* Keep accent colors same or adjust */
+    --color2: #F78104;
+    --color3: #FAAB36;
+    --color4: #249EA0;
+    --color5: #00CCCC; /* Adjust for better contrast */
+    --color6: #009999;
+    --card_color: #1e1e1e;
+    --desc_color: #bfbfbf;
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --text2-color: #d4d0d0c3;
+    --box_shadow: 0 8px 28px rgba(255, 255, 255, 0.08);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body{
+    font-family: Montserrat;
+}
+
+
+.primary-btn{
+    background-color: transparent;
+    border-radius: 100px;
+    border: 2px solid var(--color5);
+    color: var(--color5);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+}
+
+.primary-btn:hover{
+    background-color: var(--color5);
+    color: var(--bg-color);
+}
+
+
+.primary-btn2{
+    background-color: transparent;
+    border-radius: 100px;
+    border: 2px solid var(--color2);
+    color: var(--color2);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+}
+
+.primary-btn2:hover{
+    background-color: var(--color2);
+    color: white;
 }

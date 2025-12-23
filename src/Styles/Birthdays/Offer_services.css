@@ -1,0 +1,316 @@
+/* Main container */
+.offer_services {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  min-height: 95vh;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media(max-width: 768px){
+    .offer_services{
+        min-height: 30vh;
+    }
+}
+
+/* Arrow as left column */
+.offerserviceback {
+  flex: 0 0 60px; /* fixed width for arrow */
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text_color);
+  display: flex;
+  align-items: flex-start;
+  margin: 0;
+}
+
+/* Main content as right column */
+.offerservicemain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+}
+
+/* Title + subtitle */
+.offerservicesec1 {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.offer-flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.offerservicesheadertitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+  color: var(--text_color);
+}
+
+.offerserviceheadersubtitle {
+  font-size: 16px;
+  color: var(--desc_color);
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+/* Content: left form + right card */
+.offerservicescontent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+/* Make Service Title and Pricing appear in a row */
+
+.submit-div{
+    background-color: var(--bg_color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.submit-div h3{
+    font-size: 2rem;
+    margin: 0;
+}
+
+.offerservicespricinginput,
+.offerservicesdescriptioninput {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  background-color: var(--bg_color);
+}
+
+.offerservicestitleinput{
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 5px;
+    background-color: var(--bg_color);
+}
+
+.offerservicestitleinput:focus{
+    outline: 1px solid rgb(147, 150, 152);
+}
+
+
+.offerservicestitleinput:disabled{
+    background-color: var(--bg_color);
+}
+
+.offerservicesdescriptioninput {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.offerserviceleft{
+    background-color: var(--bg_color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(66, 66, 66, 0.116);
+}
+
+.offerserviceright{
+    background-color: var(--bg_color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(66, 66, 66, 0.116);
+}
+
+
+/* Gap above submit button */
+.offerservicesec6 {
+  margin-top: 20px;
+  /* algin center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Submit button */
+.offerservicesubmitbtn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.offerservicesubmitbtn:hover {
+  background-color: #45a049;
+}
+
+.offerservicetitle{
+    font-size: small;
+    color: var(--color5);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Card rows */
+.offername,
+.offeremail,
+.offercontact,
+.offerschool {
+  display: flex;
+  font-size: 14px;
+  gap: 30px;
+
+}
+
+.offerservicename,
+.offerservicesemail,
+.offerservicescontact,
+.offerservicesschool {
+  font-weight: 600;
+  color: #555;
+}
+
+.offerservicesubname,
+.offerservicesubemail,
+.offerservicesubcontact,
+.offerservicesubschool {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+
+  .offerservicescontent {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* adjustable space between left & right */
+  }
+
+  /* Left column = 65% */
+  .offerserviceleft{
+    width: 50%;
+  }
+
+  /* Right column = 35% */
+  .offerserviceright {
+    width: 50%;
+  }
+
+}
+
+@media (max-width: 786px) {
+
+  /* Stack content vertically */
+  .offerservicescontent {
+    flex-direction: column-reverse; /* right card comes first */
+    gap: 15px;
+  }
+
+  /* Full width for left and right columns */
+  .offerserviceleft,
+  .offerserviceright{
+    width: 100% !important;
+  }
+
+  /* Decrease title and subtitle font size */
+  .offerservicesheadertitle {
+    font-size: 22px;
+  }
+
+  .offerserviceheadersubtitle {
+    font-size: 14px;
+  }
+
+  /* Inputs: stack vertically and shrink size */
+  .offerservicesec5 input,
+  .offerservicesdescriptioninput {
+    flex: 1 1 100%;      /* full width */
+    font-size: 13px;     /* slightly smaller text */
+    padding: 8px;        /* smaller padding */
+  }
+
+  /* Textarea for section 5 */
+  .offerservicesdescriptioninput {
+    min-height: 100px;   /* slightly smaller height */
+  }
+
+  /* Spacing for section 4 */
+  .offerservicesec4 {
+    margin-top: 15px;
+  }
+
+  /* Reduce spacing for section 5 */
+  .offerservicesec5 {
+    margin-top: 15px !important;
+  }
+
+  /* Outer container: remove horizontal padding */
+  .offer_services {
+    padding: 0;
+    min-height: 90vh;
+
+  }
+
+  /* Inner containers: reduce padding */
+  .offerservicemain,
+  .offerserviceleft,
+  .offerserviceright {
+    padding: 15px; /* smaller padding */
+  }
+
+  /* Optional: adjust form section padding/margins if needed */
+  .offerservicesec3,
+  .offerservicesec4,
+  .offerservicesec5 {
+    gap: 10px;
+  }
+  
+
+}
+
+@media (max-width: 480px){
+
+    .offer_services {
+    padding: 0;
+    height: 150vh;
+    
+
+  }
+  .offer-flex-column{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 120px;
+}
+.offerservicescontent{
+  position: absolute;
+  top: 210px;
+  right: 0px;
+  width: 100%; 
+  padding: 0 15px;
+}
+
+}
+

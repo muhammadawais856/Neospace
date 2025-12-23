@@ -1,0 +1,274 @@
+
+/* Wrap arrow and heading in a flex container */
+.arrow_birthday {
+  position: absolute;
+  top: 28px;       /* adjust this number to move arrow downward */
+  left: 15px;      /* same horizontal place */
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text_color);
+  transition: all 0.3s ease;
+}
+.Carpool_arrow {
+  position: absolute;
+  top: 28px;       /* adjust this number to move arrow downward */
+  left: 15px;      /* same horizontal place */
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text_color);
+  transition: all 0.3s ease;
+}
+
+.birthdayright{
+   position: absolute;
+  right: 80px;
+  top: 40px;
+}
+/* Parent must be relative */
+.main {
+  position: relative;
+  padding: 30px 80px;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+
+
+.birthdayouter {
+  box-sizing: border-box;
+}
+
+.birthdaytop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.birthdayleft {
+  display: flex;
+  flex-direction: column;   /* arrange in vertical rows */
+  align-items: flex-start;  /* keep everything left aligned */
+  gap: 2px;                 /* small space between h3 and p */
+}
+
+.birthdayleft h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.birthdayleft p {
+  margin: 0;
+  color: var(--desc_color);
+  font-size: 1rem;
+}
+
+.page-btn {
+  padding: 8px 14px;
+  margin: 4px;
+  border: 1px solid #333;
+  background-color: #C3C3C3C3;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  border: none;
+}
+
+/* Center pagination and add spacing */
+.page-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 0;   /* top & bottom space */
+}
+
+
+/* Hover effect */
+.page-btn:hover {
+  background: #f2f2f2;
+  transform: translateY(-2px);
+  border: none;
+}
+
+/* Active page button */
+.page-btn.active {
+  background: var(--color5);
+  color: #fff;
+  border-color: #333;
+  transform: scale(1.05);
+  border: none;
+}
+
+
+/* Media Query for smaller screens */
+@media (max-width: 850px) {
+  /* keep flex row but decrease sizes */
+  .birthdaytop {
+    flex-direction: row;       /* row remains */
+    align-items: center;
+  }
+
+  .birthdaytop .birthdayleft p {
+    font-size: 12px;           /* smaller paragraph */
+  }
+
+  .birthdaytop .birthdayright .offerservicebtn {
+    padding: 6px 12px;         /* smaller button */
+    font-size: 14px;
+  }
+}
+
+/* Birthday responsive for 500px */
+@media (max-width: 700px) {
+
+  /* Make main container vertical & reduce padding */
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+  }
+  .carpoolcard{
+    width: 100% !important;
+  }
+
+  /* Move right button to top right */
+  .birthdayright {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  /* Make arrow smaller & aligned correctly */
+  .arrow_birthday, .Carpool_arrow {
+    width: 25px;
+    height: 25px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-top: 0;
+    top: 20px;
+    left: 15px;
+  }
+
+  /* Adjust the right-side button */
+  .offerservicebtn {
+    margin-top: -35px;   /* same as business version */
+    padding: 4px 10px;
+    font-size: 12px;
+    align-self: flex-start;
+  }
+
+  /* Title + subtitle adjust */
+  .birthdaytop {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-left: 0;
+  }
+
+  /* Smaller heading */
+  .birthdayleft h3 {
+    font-size: 30px;
+    margin: 0;
+  }
+
+  /* Smaller subtitle */
+  .birthdayleft p {
+    font-size: 12px;
+    margin: 0;
+    color: #666;
+  }
+  .rating_birthday {
+      display: flex;
+      justify-content: start;
+      gap: 5px;
+      margin: 10px 0;
+  }
+
+
+
+}
+
+
+/* for carpool css */
+
+.location p{
+  padding : 0px;
+  margin: 0px;
+  
+}
+
+.car{
+  color: var(--color5);
+}
+
+.vehicleIcon{
+
+  height: 20px;
+  width: 20px;
+}
+
+.carpoolrow {
+  display: flex;               /* make it a row */
+  justify-content: space-between; /* space between the two items */
+  align-items: end;         /* vertically center items */
+  margin-top: 30px;            /* optional spacing from above content */
+  gap: 10px;                   /* optional gap between items on small screens */
+}
+
+.carpoolavailabe .available {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color1);
+  margin: 0px;
+}
+
+.carpoolbtn .primary-btn {
+  padding: 6px 12px;           /* adjust button size */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.carpoolcard {
+  background-color: var(--card_color);      /* card background */
+  border-radius: 15px;              /* rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* subtle shadow */
+  padding: 35px;
+  width: calc(50% - 20px);          /* two cards per row minus gap */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease;
+  /* fix height */
+  
+}
+
+.carpoolcard {
+  width: calc(50% - 20px);
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.carpoolcard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}

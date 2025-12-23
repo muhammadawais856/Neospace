@@ -1,0 +1,168 @@
+.birthdaycard {
+  background-color: var(--card_color);      /* card background */
+  border-radius: 15px;              /* rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* subtle shadow */
+  padding: 35px;
+  width: calc(50% - 20px);          /* two cards per row minus gap */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease;
+}
+
+.birthdaycard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.goldStar{
+  color: rgb(255, 187, 0);
+}
+
+.grayStar{
+  color: rgb(168, 168, 168);
+}
+
+.birthdaybottom {
+  display: flex;
+  flex-wrap: wrap; 
+  margin: -10px; /* negative half of gap to neutralize outer spacing */
+  box-sizing: border-box;
+}
+
+/* Each card styling */
+.birthdaycard {
+  width: calc(50% - 20px);
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.userimg {
+  margin-top: 2px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Section 1: profile, name/rating, featured button */
+.birthdaysec1 {
+  display: flex;
+  align-items: start !important;             /* vertical alignment */
+  justify-content: space-between;  /* left = profile+name, right = featured */
+  gap: 15px;
+}
+
+/* Left: profile + name + rating */
+.nameetc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Profile image container */
+.profileimg {
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+/* Name and stars stacked */
+.profilename {
+  display: flex;
+  flex-direction: column;  /* name on top, rating below */
+  justify-content: center;
+}
+
+.profilename h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rating {
+  display: flex;
+  gap: 3px;
+  margin-top: 5px;
+}
+
+/* Featured button on the right */
+.featured_birthday {
+  color: #0571ff;              /* dark golden */
+  flex-shrink: 0; /* prevent shrinking */
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: end;
+  padding: 0;
+  gap: 5px;
+}
+
+/* Description section */
+.birthdaysec2 {
+  margin-top: 10px;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Reviews / Contact buttons section */
+.birthdaysec3 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+/* Responsive for mobile */
+@media (max-width: 850px) {
+  .birthdaycard {
+    width: 100%;
+  }
+
+  .birthdaysec1 {
+    flex-direction: row;      /* keep everything in one line */
+    align-items: center;      /* vertical alignment */
+    justify-content: space-between; /* left and right sides */
+    gap: 10px;
+  }
+
+  /* Shrink profile image */
+  .profileimg .userimg {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Shrink name text */
+  .profilename h3 {
+    font-size: 14px;
+  }
+
+  /* Shrink rating stars */
+  .rating svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Shrink Featured button */
+  .featured-btn {
+    font-size: 14px;
+    padding: 3px 6px;
+  }
+
+  .featured-btn .icon {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 700px){
+
+  .birthdaycard{
+    padding: 25px;
+  }
+
+}
+

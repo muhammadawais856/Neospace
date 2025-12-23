@@ -1,0 +1,235 @@
+/* ===============================
+MAIN WRAPPER
+=============================== */
+.birthday_reviews_main {
+  position: relative;
+  padding: 30px 80px !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  
+}
+
+/* ===============================
+BACK BUTTON
+=============================== */
+.birthday_reviews_back {
+  position: absolute;
+  left: 25px;
+  top: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+
+/* ===============================
+HEADER SECTION
+=============================== */
+.birthday_review_number {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.review_get {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.review_total {
+  font-size: 18px;
+  opacity: 0.7;
+}
+.review_get, .review_slash, .review_total, .reviews_title{
+  color: var(--text-color);
+}
+
+/* ===============================
+STARS (TOP)
+=============================== */
+.reviews_rating {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 16px;
+}
+
+
+
+/* ===============================
+SECTION TITLE
+=============================== */
+.reviews_title h3 {
+  font-size: 20px;
+  margin: 20px 0 10px;
+}
+
+/* ===============================
+CARDS CONTAINER
+=============================== */
+.reviews.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===============================
+REVIEW CARD
+=============================== */
+.review_card_main {
+  background: var(--card_color);
+  border-radius: 14px;
+  padding: 16px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ===============================
+NAME & DATE ROW
+=============================== */
+.review_card_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review_username {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+
+.review_date {
+  font-size: 13px;
+  opacity: 0.6;
+    color: var(--text-color);
+}
+
+/* ===============================
+CARD STARS
+=============================== */
+.review_card_rating {
+  display: flex;
+  gap: 4px;
+  margin: 6px 0 8px;
+}
+
+/* ===============================
+COMMENT TEXT
+=============================== */
+.review_card_comment p {
+    color: var(--text-color);
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-bottom: 10px;
+}
+
+/* ===============================
+IMAGES ROW
+=============================== */
+.review_card_images {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.review_comment_image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.review_comment_image:hover {
+  transform: scale(1.05);
+}
+
+/* ===== MODAL OVERLAY ===== */
+.image_modal_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ===== MODAL BOX ===== */
+.image_modal {
+  position: relative;
+  max-width: 50%;
+  max-height: 90%;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+/* ===== CLOSE BUTTON ===== */
+.close_btn {
+  position: absolute;
+  top: -20px;
+  right: 17px;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===== BIG IMAGE ===== */
+.modal_big_image {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* ===== THUMBNAILS ===== */
+.image_slider {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.modal_image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.modal_image.active {
+  opacity: 1;
+  outline: 2px solid #4da3ff;
+}
+
+/* ===============================
+BOTTOM ACTION ROW
+=============================== */
+.review_card_bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+.review_card_bottom svg {
+  cursor: pointer;
+  transition: color 0.2s;
+  color: var(--text-color);
+}
+
+.review_card_bottom svg:hover {
+  color: #4da3ff;
+}
+
+.review_like_count {
+  font-size: 14px;
+    color: var(--text-color);
+}

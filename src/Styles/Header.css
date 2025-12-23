@@ -1,0 +1,86 @@
+/* =============================== */
+/* Global Box Sizing */
+* {
+    box-sizing: border-box;
+}
+
+/* =============================== */
+/* Header container */
+.header {
+    width: 100%;
+    background-color: var(--bg-color); /* Light/Dark mode */
+    box-shadow: var(--box_shadow);
+    position: relative; /* IMPORTANT */
+    padding: 12px 0;
+    display: flex;
+    justify-content: center; /* center the logo */
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* =============================== */
+/* Logo stays centered */
+.logo {
+    display: block;
+    max-width: 220px;
+    max-height: 55px;
+    width: 100%;
+    height: auto;
+    transition: filter 0.3s; /* optional for dark mode tweaks */
+}
+
+/* =============================== */
+/* Icons on the right */
+.header_icons {
+    position: absolute; /* take icons out of flow */
+    right: 20px;        /* move to right side */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+/* =============================== */
+/* Individual icons */
+.header_icon_link {
+    font-size: 28px;
+    color: var(--text-color); /* Uses variable */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.1s;
+}
+
+.header_icon_link:hover {
+    color: var(--color5); /* accent color on hover */
+    transform: scale(1.1);
+}
+
+/* =============================== */
+/* Light/Dark Mode toggle icon */
+.light-dark_mode {
+    font-size: 28px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.1s;
+}
+
+.light-dark_mode:hover {
+    transform: scale(1.1);
+    color: var(--color5);
+}
+
+/* =============================== */
+/* Responsive */
+@media (max-width: 768px) {
+    .logo { max-width: 180px; max-height: 48px; }
+}
+
+@media (max-width: 480px) {
+    .logo { max-width: 140px; max-height: 40px; }
+    .header_icon_link { font-size: 22px; }
+    .header_icons { gap: 10px; right: 10px; }
+}

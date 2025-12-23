@@ -1,0 +1,291 @@
+/* Main container */
+.business_item_main {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+/* Arrow back */
+.arrow {
+  position: absolute;
+  left: 18px;
+  top: 20px;
+  font-size: 25px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Outer container for left + right */
+.business_item_outer {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px; /* leave space for arrow */
+}
+
+/* Left side: images */
+.business_item_left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.business_item_mainimg img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.business_item_subimg {
+  display: flex;
+  gap: 10px;
+}
+
+.business_item_subimg img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 2px solid transparent;
+}
+
+.business_item_subimg img:hover {
+  border-color: #000;
+}
+
+/* Right side: details */
+.business_item_right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.business_item_name {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.business_item_type {
+  color: #777;
+  font-size: 16px;
+  margin: 5px 0 15px 0;
+}
+
+.business_item_price {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.business_item_pkr {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.business_item_price_act {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Description */
+.busines_item_description {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--desc_color)
+}
+
+/* Button */
+.businessbtn3{
+    margin-top: 50px;
+}
+.primary-btn3{
+    background-color: transparent;
+    border-radius: 100px;
+    border: 2px solid var(--color5);
+    color: var(--color5);
+    width: 100%;  
+    padding: 10px 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+    font-size: 18px;
+}
+
+.primary-btn3:hover{
+    background-color: var(--color5);
+    color: white;
+}
+
+.business_item_forbottom {
+  display: flex;
+  flex-direction: column;   /* top + bottom = vertical */
+  gap: 40px;
+  width: 100%;
+}
+
+.business_profile_item_card_more {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards in one row */
+  gap: 20px;
+  width: 100%;
+}
+
+
+/* ITEM CARD */
+.business_profile_items {
+  background-color: var(--card_color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px #00000052;
+  transition: 0.2s;
+}
+
+.business_profile_items:hover {
+  transform: translateY(-3px);
+}
+
+.counter_box {
+    width: 120px;
+    height: 45px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.counter_btn {
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px 10px; /* increase clickable area */
+    border-radius: 4px; /* optional: rounded button for better feel */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text_color);
+}
+
+.counter_btn:active {
+    transform: scale(0.9);
+}
+
+.counter_value {
+    font-size: 20px;
+    width: 40px; /* optional: fix width to prevent shifting */
+    text-align: center;
+}
+
+
+
+/* ---------------------------------
+             Blur         
+   --------------------------------- 
+*/
+
+.show_more_card {
+    position: relative;
+    overflow: hidden;
+}
+
+.show_more_card .business_profile_image {
+    filter: blur(20px);
+    transition: filter 0.3s;
+}
+
+.show_more_card:hover .business_profile_image {
+    filter: blur(2px); /* optional hover effect */
+}
+
+
+
+/* IMAGE */
+.business_profile_image_show_more {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Render image URL as bg */
+.business_profile_image_show_more img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.show_more_text {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 5px black;
+    pointer-events: none; /* so click goes to the card div */
+}
+
+
+
+
+
+/* Responsive for mobile */
+@media (max-width: 750px) {
+  .business_item_outer {
+    flex-direction: column;
+  }
+
+  .business_item_mainimg img {
+    height: 300px;
+  }
+
+  .business_item_subimg img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .business_profile_item_card_more {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* Make the third card full width */
+  .business_profile_item_card_more > :nth-child(3) {
+    grid-column: 1 / -1; /* span all columns */
+  }
+
+  .business_profile_image_show_more {
+    height: 150px;       /* adjust height */
+    width: 100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+
+@media (max-width:600px) {
+  .business_profile_item_card_more {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* 3 cards in one row */
+  gap: 20px;
+  width: 100%;
+ }
+  
+}

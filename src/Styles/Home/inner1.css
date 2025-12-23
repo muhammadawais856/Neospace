@@ -1,0 +1,52 @@
+.inner1{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    min-height: 4.5rem;
+}
+
+.logo2{
+  height: 2.2rem;
+  width: 2.2rem;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.para h3{
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.name{ margin: 0; }
+.company{ margin: 0; margin-top: 0.125rem; }
+
+/* Layout groups for header */
+.left { display: flex; align-items: center; gap: 0.75rem; }
+.right { display: flex; align-items: center; gap: 0.75rem; }
+
+/* Ensure para2 text doesn't wrap oddly */
+.para2 p { margin: 0; font-size: 0.95rem; }
+
+@media (max-width: 640px) {
+  .para h3{ font-size: 1rem; }
+  .company { font-size: 0.85rem; }
+  .left { gap: 0.5rem; }
+  .right { gap: 0.5rem; }
+  .logo2 { height: 1.8rem; width: 1.8rem; }
+  .para2 p { font-size: 0.85rem; }
+}
+
+@media (max-width: 480px) {
+  .inner1{ padding: 0 0.75rem; }
+  .para h3{ font-size: 0.9rem; }
+  .company { font-size: 0.75rem; }
+  .left { gap: 0.4rem; }
+  .right { gap: 0.4rem; }
+  .logo2 { height: 1.5rem; width: 1.5rem; }
+  .para2 p { font-size: 0.75rem; }
+}
+

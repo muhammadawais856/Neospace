@@ -1,0 +1,256 @@
+
+
+
+/* -------------------------
+   Main Container
+------------------------- */
+.business_profile_main {
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 20px;
+  overflow-x: hidden !important;   /* prevent horizontal overflow */
+}
+
+/* Arrow left side */
+.business_profile_arrow {
+  position: absolute;
+  left: 14px ;
+  top: 70px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* Outer container */
+.business_profile_outer {
+  padding-left: 40px;
+  /* width: 100%; */
+  overflow-x: hidden;
+}
+
+/* -------------------------
+   Section 1
+------------------------- */
+.business_profile_sec1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+  width: 100%;
+}
+
+.business_profile_left,
+.business_profile_right {
+  width: 50%;
+}
+
+/* Title styling */
+.business_profile_name {
+  font-size: 35px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+.business_profile_type {
+  margin: 0px;
+}
+.business_profile_description{
+  margin-top: 40px;
+}
+
+/* -------------------------
+   Rating Card
+------------------------- */
+.rating_card {
+  width: 100%;
+  /* max-width: 220px; */
+  background: var(--card_color);
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0px 3px 10px #0000001a;
+}
+
+.rating_card h3 {
+  font-size: 45px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px 0;
+}
+
+.rating_card p {
+  font-size: 14px;
+  color:var(--desc_color);
+}
+
+/* -------------------------
+   Section 2 - Search bar
+------------------------- */
+.business_profile_sec2 {
+  width: 100%;
+  margin: 25px 0;
+}
+
+.search-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: gray;
+}
+
+/* -------------------------
+   Section 3 – Items Grid
+------------------------- */
+.business_profile_item_card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ITEM CARD */
+.business_profile_items {
+  background-color: #cdd1d1c3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 2px 8px #0000001a;
+  transition: 0.2s;
+}
+
+.business_profile_items:hover {
+  transform: translateY(-3px);
+}
+
+/* IMAGE */
+.business_profile_image {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Render image URL as bg */
+.business_profile_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.business_profile_bottom {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item_name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Description multiline clamp */
+.description {
+  font-size: 14px;
+  color: var(--desc_color);
+  margin: 10px 0;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;  
+  overflow: hidden;
+
+  min-height: 40px; /* keeps equal height */
+}
+
+/* PRICE + RATING ROW */
+.items_items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item_price {
+  display: flex;
+  gap: 3px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.item_star {
+  display: flex;
+  gap: 3px;
+}
+
+/* -------------------------
+   Responsive: 2 cards per row for smaller screens
+------------------------- */
+@media (max-width: 950px) {
+  .business_profile_item_card {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  }
+}
+
+/* Optional: For very small screens (like mobile), 1 card per row */
+@media (max-width: 600px) {
+  .business_profile_arrow {
+    left: 20px; /* same as your .business_profile_main padding-left */
+    top: 15px;  /* adjust vertical position if needed */
+  }
+
+  .business_profile_item_card {
+    grid-template-columns: 1fr; /* 1 card per row */
+  }
+  .business_profile_outer{
+    padding-left: 0px;
+
+  }
+  .business_profile_sec1 {
+  display: flex;
+  flex-direction: column !important; /* vertical stack */
+  justify-content: flex-start;       /* start from top */
+  align-items: flex-start;           /* align content to left */
+  width: 100% !important;            /* full width */
+  max-width: 100% !important;                    /* ensure no max-width restriction */
+  padding: 0;                         /* remove parent padding influence */
+  margin: 30px 0 0 0;                 /* top margin only */
+  gap: 20px;                          /* spacing between items */
+  flex-wrap: nowrap;                  /* no wrapping */
+  box-sizing: border-box;             /* include padding/border in width */
+}
+.business_profile_left, .business_profile_right {
+    width: 100%;
+}
+
+.business_profile_name{
+  margin-top: 20px;
+}
+
+
+}
+
+

@@ -1,0 +1,13 @@
+.outer{
+    background-color: var(--bg-color);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+    min-height: 100vh;
+}
+
+@media (max-width: 480px) {
+    .outer { padding: 1.25rem 0.75rem; }
+}

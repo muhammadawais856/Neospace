@@ -1,0 +1,560 @@
+
+/* Wrap arrow and heading in a flex container */
+.arrow_smallbusiness {
+  position: absolute;
+  top: 26px;       /* adjust this number to move arrow downward */
+  left: 20px;      /* same horizontal place */
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text_color);
+  transition: all 0.3s ease;
+}
+
+.businessright{
+  position: absolute;
+  right: 80px;
+  top: 40px;
+
+}
+
+/* Parent must be relative */
+.businessmain {
+  position: relative;
+  padding: 30px 80px;
+  max-width: 1250px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+
+
+.businessouter {
+  box-sizing: border-box;
+}
+
+.businesstop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.businessleft {
+  display: flex;
+  flex-direction: column;   /* arrange in vertical rows */
+  align-items: flex-start;  /* keep everything left aligned */
+  gap: 2px;                 /* small space between h3 and p */
+}
+
+.businessleft h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.businessleft p {
+  margin: 0;
+  color: var(--desc_color);
+  font-size: 1rem;
+}
+
+.page-btn {
+  padding: 8px 14px;
+  margin: 4px;
+  border: 1px solid #333;
+  background-color: #C3C3C3C3;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  border: none;
+}
+
+/* Center pagination and add spacing */
+.page-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 0;   /* top & bottom space */
+}
+
+
+/* Hover effect */
+.page-btn:hover {
+  background: #f2f2f2;
+  transform: translateY(-2px);
+  border: none;
+}
+
+/* Active page button */
+.page-btn.active {
+  background: var(--color5);
+  color: #fff;
+  border-color: #333;
+  transform: scale(1.05);
+  border: none;
+}
+
+
+
+
+
+
+.businesstype p{
+  padding : 0px;
+  margin: 0px;
+  /* margin-top: 10px; */
+  
+}
+
+.car{
+  color: var(--color5);
+}
+
+.vehicleIcon{
+
+  height: 20px;
+  width: 20px;
+}
+
+.businessrow {
+  display: flex;               /* make it a row */
+  justify-content: space-between; /* space between the two items */
+  align-items: center;         /* vertically center items */            /* optional spacing from above content */
+  gap: 10px;    
+  margin-top: 20px;               /* optional gap between items on small screens */
+}
+
+.businessavailabe .available {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color1);
+  margin: 0px;
+}
+
+.businessbtn .primary-btn {
+  padding: 6px 12px;           /* adjust button size */
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+
+
+/* 
+---------------------------------------------------------------------
+                 Business Card          
+---------------------------------------------------------------------                 
+*/
+
+
+.businesscard {
+  background-color: var(--card_color);      /* card background */
+  border-radius: 15px;              /* rounded corners */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* subtle shadow */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.businesscard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.businesscardbottom{
+
+  padding: 30px;
+  margin-bottom: 0px !important;
+}
+
+.goldStar{
+  color: rgb(255, 187, 0);
+}
+
+.grayStar{
+  color: rgb(168, 168, 168);
+}
+
+.businessbottom {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+/* ✅ This makes 3 cards per row */
+.businessbottom > * {
+  width: calc(33.333% - 20px) !important; /* 3 in a row */
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+
+/* Each card styling */
+.businesscard {
+  width: calc(50% - 20px);
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+.userimg {
+  margin-top: 2px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Section 1: profile, name/rating, featured button */
+.businesssec1 {
+  display: flex;
+  align-items: start !important;             /* vertical alignment */
+  justify-content: space-between;  /* left = profile+name, right = featured */
+  gap: 15px;
+}
+
+/* Left: profile + name + rating */
+.nameetc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Profile image container */
+.profileimg {
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+/* Name and stars stacked */
+.profilename {
+  display: flex;
+  flex-direction: column;  /* name on top, rating below */
+  justify-content: center;
+}
+
+.profilename h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.rating {
+  display: flex;
+  gap: 3px;
+  margin-top: 5px;
+}
+
+/* Featured button on the right */
+.featured {
+  color: #0571ff;              /* dark golden */
+  flex-shrink: 0; /* prevent shrinking */
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  padding: 0;
+  gap: 5px;
+}
+
+/* Description section */
+.businesssec2 {
+  margin-top: 10px;
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Reviews / Contact buttons section */
+.businesssec3 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.businessimageurl {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.businessimageurl img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.businessdropdown {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+  margin-bottom: 15px;
+  width: 50%; 
+  
+}
+.business_filter p{
+  margin: 0;
+    color: var(--desc_color);
+    font-size: 1rem;
+
+}
+
+.businessdropdown select {
+  margin-top: 10px; 
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+.businessdropdown select:hover {
+  border-color: #333;
+}
+
+/* Focus */
+.businessdropdown select:focus {
+  border-color: var(--color5);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 1000px) {
+  .businessbottom > * {
+    width: calc(50% - 20px) !important;  /* 2 cards per row */
+    margin: 10px;
+  }
+}
+
+
+/* Responsive for mobile */
+@media (max-width: 850px) {
+  .businesscard {
+    width: 100%;
+  }
+
+  .businesssec1 {
+    flex-direction: row;      /* keep everything in one line */
+    align-items: center;      /* vertical alignment */
+    justify-content: space-between; /* left and right sides */
+    gap: 10px;
+  }
+
+  /* Shrink profile image */
+  .profileimg .userimg {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Shrink name text */
+  .profilename h3 {
+    font-size: 14px;
+  }
+
+  /* Shrink rating stars */
+  .rating svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Shrink Featured button */
+  .featured-btn {
+    font-size: 14px;
+    padding: 3px 6px;
+  }
+
+  .featured-btn .icon {
+    font-size: 16px;
+  }
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 850px) {
+  /* keep flex row but decrease sizes */
+  .businesstop {
+    flex-direction: row;       /* row remains */
+    align-items: center;
+  }
+
+  .businesstop .businessleft p {
+    font-size: 12px;           /* smaller paragraph */
+  }
+
+  .businesstop .businessright .offerservicebtn {
+    padding: 6px 12px;         /* smaller button */
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 730px) {
+
+  /* force arrow to show */
+  .arrow_smallbusiness {
+    display: flex !important;  
+    margin: 0 0 15px 0;
+    width: 35px;
+    height: 35px;
+    margin-left: 0;
+    margin-top: -15px;
+    top: 28px;
+    left: 10px;
+  }
+
+  /* make row break */
+  .businessmain {
+    display: block;
+    padding: 15px;
+  }
+
+  /* business text padding — move rightward */
+  .businesstop {
+    padding-left: 50px; /* adjust this value as needed */
+    padding-right: 15px;
+  }
+}
+
+/* For screens 620px and smaller */
+/* For screens 620px and smaller */
+@media (max-width: 620px) {
+  /* 1 card per row */
+  .businessbottom > * {
+    width: 100% !important;           /* full width */
+    margin: 10px 0;
+  }
+  .businessbottom{
+    padding: 10px;
+  }
+
+  /* Keep fixed card height */
+  .businesscard {
+    height: 350px;         /* fixed height */
+  }
+
+  .businessimageurl {
+    height: 50%;            /* image takes half card height */
+  }
+
+  .businessimageurl img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Card content (bottom) */
+  .businesscardbottom {
+    padding: 10px;         /* smaller padding */
+    height: 50%;           /* bottom half */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* distribute content */
+  }
+
+  /* Text size adjustments */
+  .businessleft h3,
+  .profilename h3 {
+    font-size: 14px;       /* smaller heading */
+  }
+
+  .businessleft p,
+  .businesstype p,
+  .description {
+    font-size: 12px;       /* smaller text */
+  }
+
+  /* Stars size */
+  .rating svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Buttons smaller */
+  .businessbtn .primary-btn,
+  .businessright .primary-btn2 {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  
+
+  /* Header spacing */
+  .businesstop {
+    padding-left: 40px;
+    padding-right: 0px;   /* shift text slightly right of arrow */
+  }
+}
+
+@media (max-width: 500px) {
+  /* Stack arrow and title vertically */
+  .businessmain {
+    display: flex;
+    flex-direction: column; /* stack items vertically */
+    align-items: flex-start; /* align to left */
+    padding: 10px 15px;
+  }
+  .businessright{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+
+}
+
+
+  /* Arrow smaller and on top */
+  .arrow_smallbusiness {
+    width: 25px;
+    height: 25px;
+    font-size: 22px;
+    margin-bottom: 10px;  /* space below arrow */
+    margin-left: 0;
+    margin-top: 0;
+    top: 20px;
+    left: 14px;
+    
+  }
+   .offerservicebtn {
+    
+    margin-top: -35px; /* adjust this value to align with arrow */
+    align-self: flex-start; /* keep it aligned with left content if needed */
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+
+  /* Title/subtitle below arrow */
+  .businesstop {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: row; /* vertical stack */
+    align-items: flex-start; /* left align */
+    padding-left: 0;        /* remove extra padding */
+  }
+
+  .businessleft h3 {
+    font-size: 20px;       /* smaller heading */
+    margin: 0;
+  }
+
+  .businessleft p {
+    font-size: 12px;       /* smaller subtitle */
+    margin: 0;
+    color: #666;
+  }
+}
+

@@ -1,0 +1,83 @@
+/* Base card styles - responsive and flexible */
+.Card, .card2, .card3 {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 15px;
+    font-size: 1.125rem; /* ~18px */
+    position: relative;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* CARD 1 (already working via inline style) */
+.Card { 
+    min-height: 12rem; 
+    box-shadow: 0 8px 24px rgba(243,156,18,0.12);
+}
+
+/* CARD 2 — IMAGE ONLY (NO LAYOUT CHANGE) */
+.card2 { 
+    background-image: url("https://picsum.photos/id/1060/1200/800");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    min-height: 12rem;
+    height: 100%;
+
+    box-shadow: 0 8px 24px rgba(39,174,96,0.10);
+}
+
+/* CARD 3 — IMAGE ONLY (NO LAYOUT CHANGE) */
+.card3 { 
+    background-image: url("https://images.unsplash.com/photo-1606787366850-de6330128bfc");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    min-height: 15rem;
+    color: #FFFFFF;
+
+    box-shadow: 0 8px 24px rgba(14,125,107,0.10);
+}
+
+/* TEXT POSITIONING */
+.Card-text, .card2-text, .card3-text {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    margin: 0;
+    color: inherit;
+}
+
+/* HOVER EFFECT (UNCHANGED) */
+.Card:hover,
+.card2:hover,
+.card3:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+    transform: translateY(-1.5px);
+    transition: 0.3s ease;
+}
+
+/* RESPONSIVE (UNCHANGED) */
+@media (max-width: 480px) {
+    .Card, .card2, .card3 { 
+        height: calc((100vh - 600px) / 4);
+        min-height: 0.6rem;
+        max-height: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .card2 { height: auto; min-height: 14rem; }
+}
+
+@media (max-width: 760px) {
+    .Card, .card2, .card3 { 
+        min-height: 7rem; 
+        height: 100%;
+    }
+}
