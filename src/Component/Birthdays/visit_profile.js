@@ -38,7 +38,7 @@ function VisitProfile() {
                 <img src={logo} className="visituserimg" alt="user" />
                 <div className="visitnames">
                         <h3 className="visitname">Awais Lateef</h3>
-                        <p className="visitcompany">Neosyss</p>
+                        
                     </div>
                 </div>
 
