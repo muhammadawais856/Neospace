@@ -192,8 +192,8 @@ function SignUp() {
 
               <p className="signup_login">
                 Didn't receive OTP?{" "}
-                <span className="login_link" onClick={() => setStep("signup")}>
-                  Return to Sign Up
+                <span className="login_link">
+                  Resend OTP
                 </span>
               </p>
 
