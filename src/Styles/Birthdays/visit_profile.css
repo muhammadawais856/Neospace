@@ -165,7 +165,7 @@
   top: 12px;
   left: 15px;
   margin: 0;
-  color: var(--color6); /* darker text */
+  color: var(--card_text_new); /* darker text */
 }
 
 /* Details text: bigger, bottom-right, different color */
@@ -272,8 +272,10 @@
   width: 100%;
   padding: 12px;
   font-size: 15px;
-  border: 1px solid #ccc;
+  border: var(--border);
   border-radius: 8px;
+  background-color: var(--bg-color);
+  color: var(--text_color);
 }
 .chatinput:focus {
   outline: none;

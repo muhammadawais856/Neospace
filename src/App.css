@@ -38,6 +38,10 @@ body {
     --text-color: #000000;
     --text2-color: #5a5e5ec3;
     --box_shadow: 0 8px 28px rgba(20, 20, 20, 0.14);
+    --card_text_new: #005F60;
+    --border: 1px solid #ccc;
+    --card_gradient: linear-gradient(to top right, #b8bcbc, #e6e9e9);
+
 }
 
 /* Dark Mode */
@@ -54,6 +58,9 @@ body {
     --text-color: #ffffff;
     --text2-color: #d4d0d0c3;
     --box_shadow: 0 8px 28px rgba(255, 255, 255, 0.08);
+    --card_text_new: #d4d0d0c3;
+    --border: 1px solid #333;
+   --card_gradient: linear-gradient(to top right, #0b0b0b, #242424);
 }
 
 body{

@@ -1,5 +1,5 @@
 .birthdaycard {
-  background-color: var(--card_color);      /* card background */
+  background: var(--card_gradient);      /* card background */
   border-radius: 15px;              /* rounded corners */
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* subtle shadow */
   padding: 35px;

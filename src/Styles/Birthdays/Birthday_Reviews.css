@@ -40,14 +40,20 @@ BACK BUTTON
 /* ===== SUMMARY ===== */
 .reviews_summary {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   background: var(--card_color);
   padding: 30px;
   border-radius: 14px;
   margin-bottom: 30px;
+  gap: 50px;
 }
 
 /* LEFT */
+.summary_left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .summary_left h1 {
   font-size: 60px;
   margin: 0;
@@ -66,7 +72,7 @@ BACK BUTTON
 
 /* RIGHT */
 .summary_right {
-  width: 45%;
+  width: 30%;
 }
 
 .rating_bar_row {
@@ -147,7 +153,7 @@ BACK BUTTON
 
   .reviews_summary {
     flex-direction: column;
-    gap: 20px;
+    
   }
 
   .birthday_reviews_main{
@@ -155,11 +161,14 @@ BACK BUTTON
     
   }
   .birthday_reviews_back{
-    top: 0px !important;
+    top: 10px !important;
   }
   .reviews_summary{
     margin-top: 30px !important;
   }
+  .summary_right {
+  width: 100%;
+}
 }
 
 /* ===============================
