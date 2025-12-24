@@ -124,6 +124,12 @@
   object-fit: cover;
   display: block;
 }
+.login_btn {
+    width: 100%;
+}
+.primary-btn{
+    width: 100%;
+}
 
 /* ==========================
    RESPONSIVE

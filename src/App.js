@@ -25,6 +25,7 @@ import Birthday_Reviews from './Component/Birthdays/Birthday_Reviews.js';
 import RateProduct from './Component/Rate_product.js';
 import Login from './Component/Auth/Login.js';
 import SignUp from './Component/Auth/signup.js';
+import ForgotPassword from './Component/Auth/forgot_password.js';
 function App() {
   return (
     <>
@@ -52,6 +53,7 @@ function App() {
         <Route path='rateproduct' element={<RateProduct />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
+        <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
       </Routes>
       <Footer/>
     </BrowserRouter>

@@ -115,6 +115,26 @@
   display: block;
 }
 
+.otp_container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.otp_input {
+  width: 45px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.otp_input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
 /* ==========================
    RESPONSIVE
 ========================== */
