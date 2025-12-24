@@ -36,11 +36,11 @@ function SignUp() {
   const handleErrors = () => {
     const values = getValues();
     const allEmpty =
-      !values.fullName &&
-      !values.email &&
-      !values.contact &&
-      !values.password &&
-      !values.confirmPassword &&
+      !values.fullName ||
+      !values.email ||
+      !values.contact ||
+      !values.password ||
+      !values.confirmPassword ||
       !values.terms;
 
     if (allEmpty) {
@@ -60,6 +60,13 @@ function SignUp() {
     // move focus to next input
     if (value && index < 5) {
       inputsRef.current[index + 1].focus();
+    }
+  };
+
+  // Handle OTP backspace navigation
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === "Backspace" && !otpValues[index] && index > 0) {
+      inputsRef.current[index - 1].focus();
     }
   };
 
@@ -86,9 +93,7 @@ function SignUp() {
         {step === "signup" && (
           <div className="signup_left">
             <h2>Create your Account</h2>
-            <p className="signup_subtitle">
-              Welcome! Please fill in your details to sign up.
-            </p>
+            <p className="signup_subtitle">Welcome! Please fill in your details to sign up.</p>
 
             <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
               <div className="signup_fields">
@@ -154,9 +159,7 @@ function SignUp() {
 
               <p className="signup_login">
                 Already have an account?{" "}
-                <span className="login_link" onClick={() => navigate("/login")}>
-                  Log in
-                </span>
+                <span className="login_link" onClick={() => navigate("/login")}>Log in</span>
               </p>
             </form>
           </div>
@@ -177,7 +180,8 @@ function SignUp() {
                     value={val}
                     ref={(el) => (inputsRef.current[index] = el)}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
-                    style={{ width: "40px", textAlign: "center", fontSize: "18px" }}
+                    onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                    className="otp_input"
                   />
                 ))}
               </div>
@@ -195,9 +199,7 @@ function SignUp() {
 
               <p className="signup_login">
                 Already have an account?{" "}
-                <span className="login_link" onClick={() => navigate("/login")}>
-                  Log in
-                </span>
+                <span className="login_link" onClick={() => navigate("/login")}>Log in</span>
               </p>
             </form>
           </div>
