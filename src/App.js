@@ -23,6 +23,9 @@ import Business_offer_service from "./Component/Small_Business/Offer_services.js
 import My_store from './Component/Small_Business/My_Store.js';
 import Birthday_Reviews from './Component/Birthdays/Birthday_Reviews.js';
 import RateProduct from './Component/Rate_product.js';
+import Login from './Component/Auth/Login.js';
+import SignUp from './Component/Auth/signup.js';
+import ForgotPassword from './Component/Auth/forgot_password.js';
 function App() {
   return (
     <>
@@ -48,6 +51,9 @@ function App() {
         <Route path='mystore' element={<My_store></My_store>}/>
         <Route path='birthdayreviews' element={<Birthday_Reviews />}></Route>
         <Route path='rateproduct' element={<RateProduct />}></Route>
+        <Route path='/login' element={<Login />}></Route>
+        <Route path='/signup' element={<SignUp />}></Route>
+        <Route path='/forgotpassword' element={<ForgotPassword />}></Route>
       </Routes>
       <Footer/>
     </BrowserRouter>
