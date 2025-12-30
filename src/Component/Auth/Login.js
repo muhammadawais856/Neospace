@@ -87,7 +87,7 @@ function Login() {
             </div>
 
             <div className="login_btn">
-              <button className="primary-btn" type="submit">
+              <button className="primary-btn" type="submit" onClick={() => navigate("/")}>
                 Log In
               </button>
             </div>
