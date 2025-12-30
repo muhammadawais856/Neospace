@@ -65,11 +65,11 @@
 .rating_card {
   width: 100%;
   /* max-width: 220px; */
-  background: var(--card_color);
+  background: var(--card_gradient);
   border-radius: 15px;
   padding: 20px;
   text-align: center;
-  box-shadow: 0px 3px 10px #0000001a;
+  box-shadow: var(--box_shadow);
 }
 
 .rating_card h3 {
@@ -136,7 +136,7 @@
   background-color: #cdd1d1c3;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0px 2px 8px #0000001a;
+  box-shadow: var(--box_shadow);
   transition: 0.2s;
 }
 

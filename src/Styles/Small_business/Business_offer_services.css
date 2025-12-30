@@ -48,7 +48,7 @@ position: absolute;
   flex-direction: row; /* stack items vertically */
   gap: 20px;
   width: 100%;
-  background-color: var(--card_color);
+  background: var(--card_gradient);
    border-radius: 20px;
 }
 

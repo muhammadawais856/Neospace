@@ -15,7 +15,7 @@
 /* CARD 1 (already working via inline style) */
 .Card { 
     min-height: 12rem; 
-    box-shadow: 0 8px 24px rgba(243,156,18,0.12);
+    box-shadow: var(--box_shadow);
 }
 
 /* CARD 2 — IMAGE ONLY (NO LAYOUT CHANGE) */
@@ -28,7 +28,7 @@
     min-height: 12rem;
     height: 100%;
 
-    box-shadow: 0 8px 24px rgba(39,174,96,0.10);
+    box-shadow: var(--box_shadow);
 }
 
 /* CARD 3 — IMAGE ONLY (NO LAYOUT CHANGE) */
@@ -41,7 +41,7 @@
     min-height: 15rem;
     color: #FFFFFF;
 
-    box-shadow: 0 8px 24px rgba(14,125,107,0.10);
+    box-shadow: var(--box_shadow);
 }
 
 /* TEXT POSITIONING */
@@ -57,7 +57,7 @@
 .Card:hover,
 .card2:hover,
 .card3:hover {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+    box-shadow: var(--box_shadow);
     transform: translateY(-1.5px);
     transition: 0.3s ease;
 }

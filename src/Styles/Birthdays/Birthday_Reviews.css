@@ -41,7 +41,7 @@ BACK BUTTON
 .reviews_summary {
   display: flex;
   justify-content: center;
-  background: var(--card_color);
+  background: var(--card_gradient);
   padding: 30px;
   border-radius: 14px;
   margin-bottom: 30px;
@@ -111,10 +111,10 @@ BACK BUTTON
 
 /* ===== CARD ===== */
 .review_card_main {
-  background: var(--card_color);
+  background: var(--card_gradient);
   border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--box_shadow);
 }
 
 .review_username {
@@ -225,10 +225,10 @@ CARDS CONTAINER
 REVIEW CARD
 =============================== */
 .review_card_main {
-  background: var(--card_color);
+  background: var(--card_gradient);
   border-radius: 14px;
   padding: 16px;
- box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box_shadow);
 }
 
 /* ===============================

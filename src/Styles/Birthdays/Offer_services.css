@@ -128,14 +128,14 @@
     background-color: var(--bg_color);
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(66, 66, 66, 0.116);
+    box-shadow: var(--box_shadow);
 }
 
 .offerserviceright{
     background-color: var(--bg_color);
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(66, 66, 66, 0.116);
+    box-shadow: var(--box_shadow);
 }
 
 

@@ -5,7 +5,7 @@
 }
 
 .rateproduct_outer {
-  background: var(--card_color);
+  background: var(--card_gradient);
   padding: 20px;
   border-radius: 12px;
 }

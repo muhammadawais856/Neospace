@@ -8,133 +8,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
-
-
-// 10 different birthday service providers
-const data = [
-  {
-    id: 1,
-    name: "Ali Khan",
-    description: "Reliable driver offering carpool rides in G-9 Islamabad. Comfortable and punctual service for daily commutes.",
-    location: "G-9, Islamabad",
-    car: true,
-    available: "3 seat available",
-  },
-  {
-    id: 2,
-    name: "Ahmed Raza",
-    description: "Part-time carpool driver in F-8 Islamabad. Flexible schedule for shared rides.",
-    location: "F-8, Islamabad",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 3,
-    name: "Zain Malik",
-    description: "Experienced driver providing daily carpool service in Bheria Rawalpindi. Safe and friendly rides.",
-    location: "Bheria, Rawalpindi",
-    car: true,
-    available: "4 seat available"
-  },
-  {
-    id: 4,
-    name: "Hassan Sheikh",
-    description: "Part-time carpool driver in Lalkurti Rawalpindi. Comfortable vehicle and timely pick-ups.",
-    location: "Lalkurti, Rawalpindi",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 5,
-    name: "Bilal Qureshi",
-    description: "Regular carpool rides available in Sadar Rawalpindi. Affordable and reliable transportation for commuters.",
-    location: "Sadar, Rawalpindi",
-    car: true,
-    available: "2 seat available"
-  },
-  {
-    id: 6,
-    name: "Farhan Saeed",
-    description: "Providing daily carpooling in G-10 Islamabad. Friendly driver with clean and safe car.",
-    location: "G-10, Islamabad",
-    car: true,
-    available: "4 seat available"
-  },
-  {
-    id: 7,
-    name: "Usman Tariq",
-    description: "Occasionally available for carpool in F-7 Islamabad. Flexible and convenient rides for commuters.",
-    location: "F-7, Islamabad",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 8,
-    name: "Faisal Iqbal",
-    description: "Dedicated carpool driver in Raja Bazar Rawalpindi. Comfortable rides with on-time pickups.",
-    location: "Raja Bazar, Rawalpindi",
-    car: true,
-    available: "3 seat available"
-  },
-  {
-    id: 9,
-    name: "Imran Ali",
-    description: "Luxury carpool rides in Chaklala Rawalpindi. Perfect for office commutes and group sharing.",
-    location: "Chaklala, Rawalpindi",
-    car: true,
-    available: "4 seat available"
-  },
-  {
-    id: 10,
-    name: "Omar Farooq",
-    description: "Part-time carpool driver in G-11 Islamabad. Affordable rides for daily commuting.",
-    location: "G-11, Islamabad",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 11,
-    name: "Adnan Tariq",
-    description: "Reliable carpool driver in D-Chowk Islamabad. Comfortable and safe daily rides.",
-    location: "D-Chowk, Islamabad",
-    car: true,
-    available: "3 seat available"
-  },
-  {
-    id: 12,
-    name: "Sami Shah",
-    description: "Part-time driver for carpool in Saddar Rawalpindi. Convenient rides for office goers.",
-    location: "Saddar, Rawalpindi",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 13,
-    name: "Haris Ahmed",
-    description: "Daily carpool service in G-12 Islamabad. Safe and punctual rides for commuters.",
-    location: "G-12, Islamabad",
-    car: true,
-    available: "2 seat available"
-  },
-  {
-    id: 14,
-    name: "Ahsan Malik",
-    description: "Available for shared rides in Pirwadhai Rawalpindi. Comfortable and reliable carpool service.",
-    location: "Pirwadhai, Rawalpindi",
-    car: false,
-    available: "1 seat available"
-  },
-  {
-    id: 15,
-    name: "Tariq Javed",
-    description: "Experienced carpool driver in I-8 Islamabad. Friendly and punctual service for daily commuting.",
-    location: "I-8, Islamabad",
-    car: true,
-    available: "3 seat available"
-  }
-];
-
-
+import { carpoolApi } from "../../services/carpoolApi";
 
 
 function Carpool() {
@@ -142,14 +16,39 @@ function Carpool() {
 const navigate = useNavigate();
   const [startIdx, setStartIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchFreelancers();
+  }, []);
+
+  async function fetchFreelancers() {
+    try {
+      setLoading(true);
+      setError(null);
+      const freelancers = await carpoolApi.getFreelancers();
+      setData(freelancers);
+      setTotalPages(Math.ceil(freelancers.length / 10));
+    } catch (err) {
+      console.error("Error fetching freelancers:", err);
+      setError("Failed to load carpool services. Please try again later.");
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   function calculatePages(totalCards) {
     return Math.ceil(totalCards / 10); 
   }
 
   useEffect(() => {
-    setTotalPages(calculatePages(data.length));
-  },[]);
+    if (data.length > 0) {
+      setTotalPages(calculatePages(data.length));
+    }
+  }, [data]);
 
   function renderPages() {
   const buttons = [];
@@ -166,6 +65,40 @@ const navigate = useNavigate();
   }
   return buttons;
 }
+
+  if (loading) {
+    return (
+      <div className="main">
+        <div className="Carpool_arrow" onClick={() => {navigate("/")}}> <FaArrowLeft /></div>
+        <div className="birthdayouter">
+          <div className="birthdaytop">
+            <div className="birthdayleft">
+              <h3>Carpool</h3>
+              <p>Ride Together, Save Together </p>
+            </div>
+          </div>
+          <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="main">
+        <div className="Carpool_arrow" onClick={() => {navigate("/")}}> <FaArrowLeft /></div>
+        <div className="birthdayouter">
+          <div className="birthdaytop">
+            <div className="birthdayleft">
+              <h3>Carpool</h3>
+              <p>Ride Together, Save Together </p>
+            </div>
+          </div>
+          <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
+        </div>
+      </div>
+    );
+  }
 
 
   return (
@@ -185,14 +118,16 @@ const navigate = useNavigate();
         </div>
 
         <div className="birthdaybottom">
-          {data.slice(startIdx, startIdx + 10).map(item => (
+          {data.slice(startIdx, startIdx + 10).map((item) => (
             <BirthdayCard
               key={item.id}
+              id={item.id}
               name={item.name}
               location={item.location}
               description={item.description}
-              car={item.car}
-              available={item.available}
+              car={item.vehicle_type === "Car"}
+              available={`${item.seats_available} seat${item.seats_available > 1 ? 's' : ''} available`}
+              image={item.image}
             />
           ))}
         </div>
@@ -207,14 +142,14 @@ const navigate = useNavigate();
 
 export default Carpool;
 
-function BirthdayCard({ name, car, description,location,available }) {
+function BirthdayCard({ id, name, car, description, location, available, image }) {
   const navigate = useNavigate();
   return (
     <div className="carpoolcard">
       <div className="birthdaysec1">
         <div className="nameetc">
           <div className="profileimg">
-            <ProfileCard />
+            <ProfileCard image={image} />
           </div>
           <div className="profilename">
             <h3 className="birthdayname">{name}</h3>
@@ -226,9 +161,7 @@ function BirthdayCard({ name, car, description,location,available }) {
         </div>
 
         <div className="car">
-            {[...Array(1)].map((_, i) =>
-                car ? <FaCar  key={i} className="vehicleIcon" /> : <RiMotorbikeFill key={i} className="vehicleIcon" />
-               )}
+            {car ? <FaCar className="vehicleIcon" /> : <RiMotorbikeFill className="vehicleIcon" />}
         </div>
       </div>
 
@@ -242,7 +175,7 @@ function BirthdayCard({ name, car, description,location,available }) {
             </div>
 
             <div className="carpoolbtn">
-                <button onClick={()=>{navigate('/Carpoolvisitprofile')}}
+                <button onClick={()=>{navigate(`/Carpoolvisitprofile?freelancerId=${id}`)}}
                    className="primary-btn">Visit Profile</button>
             </div>
         </div>
@@ -251,10 +184,10 @@ function BirthdayCard({ name, car, description,location,available }) {
   );
 }
 
-function ProfileCard() {
+function ProfileCard({ image }) {
   return (
     <div className="profilecard">
-      <img src={logo} className="userimg" alt="user" />
+      <img src={image || logo} className="userimg" alt="user" />
     </div>
   );
 }

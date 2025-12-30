@@ -47,7 +47,7 @@ p, h3 {
   padding: 25px;
   margin-bottom: 20px;
   margin-top: 20px;
-  background-color: var(--card_color);
+  background: var(--card_gradient);
 }
 
 /* Shop name */
