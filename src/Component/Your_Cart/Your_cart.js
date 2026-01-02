@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
-import { getCartByStores, getCart, removeFromCart, updateCartItemQuantity, getCartTotal, getCartItemsCount } from "../../utils/cartUtils";
-import "../../Styles/Your_cart/Your_cart.css"
+import { getCartByStores, removeFromCart, updateCartItemQuantity, getCartTotal, getCartItemsCount } from "../../utils/cartUtils";
+import { useAuth } from "../../contexts/AuthContext";
+import SignupModal from "../Common/SignupModal";
+import "../../Styles/Your_cart/Your_cart.css";
 
-function Your_cart(){
-    const navigate = useNavigate();
-    const [stores, setStores] = useState([]);
-    const [totalAmount, setTotalAmount] = useState(0);
-    const [totalItems, setTotalItems] = useState(0);
-    const [loading, setLoading] = useState(false);
+function Your_cart() {
+  const { isAuthenticated } = useAuth();
+  const [stores, setStores] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   useEffect(() => {
     loadCart();
@@ -55,173 +55,87 @@ function Your_cart(){
                      <button onClick={() => changeQty(item.id, item.quantity + 1)}>+</button>
                  </div>
                 </div>
-                
-                {loading ? (
-                    <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
-                ) : stores.length === 0 ? (
-                    <div style={{ padding: '20px', textAlign: 'center' }}>Your cart is empty</div>
-                ) : (
-                    <>
-                        {stores.map((store, storeIndex) => (
-                            <div key={storeIndex} className="store-section">
-                                <div className="store-header">
-                                    <h3 className="store-name">{store.business_name}</h3>
-                                </div>
-                                
-                                <div className="Cart_Card">
-                                    {store.items.map((item, index) => (
-                                        <Cart_card 
-                                            key={item.id || index}
-                                            item={item}
-                                            onDelete={() => handleDeleteItem(item.id)}
-                                            onQuantityChange={handleQuantityChange}
-                                        />
-                                    ))}
-                                </div>
-                                
-                                <div className="store-subtotal">
-                                    <div className="store-subtotal-row">
-                                        <span>Subtotal ({store.business_name}):</span>
-                                        <strong>PKR {store.subtotal.toFixed(2)}</strong>
-                                    </div>
-                                </div>
-                                
-                                {storeIndex < stores.length - 1 && <hr className="divider" />}
-                            </div>
-                        ))}
-                        
-                        <hr className="divider" />
-                        <div className="cart_bottom">
-                            <div className="cart_item">
-                                <div>Total items</div>
-                                <h3>{totalItems}</h3>
-                            </div>
-                            <div className="cart_price">
-                                <div>Total Amount</div>
-                                <h3>PKR {totalAmount.toFixed(2)}</h3>
-                            </div>
-                            <div className="checkout_btn">
-                                <button 
-                                    onClick={() => { 
-                                        // Handle checkout
-                                        alert('Checkout functionality coming soon!');
-                                    }}
-                                    className="primary-btn4">
-                                    Check Out
-                                </button>
-                            </div>
-                        </div>
-                    </>
-                )}
-            </div>
 
-        </div>
-        <ToastContainer />
-        </>
-    );
-}
 
-export default Your_cart;
-
-function Cart_card({ item, onDelete, onQuantityChange }){
-    const [quantity, setQuantity] = useState(item?.quantity || 1);
-    
-    const increment = () => {
-        const newQty = item.store_type === 'nustfruita' ? quantity + 0.5 : quantity + 1;
-        setQuantity(newQty);
-        if (onQuantityChange) {
-            onQuantityChange(item.id, newQty);
-        }
-    };
-    
-    const decrement = () => {
-        const minQty = item.store_type === 'nustfruita' ? 0.5 : 1;
-        const newQty = quantity > minQty ? (item.store_type === 'nustfruita' ? quantity - 0.5 : quantity - 1) : minQty;
-        setQuantity(newQty);
-        if (onQuantityChange) {
-            onQuantityChange(item.id, newQty);
-        }
-    };
-
-    useEffect(() => {
-        setQuantity(item?.quantity || 1);
-    }, [item?.quantity]);
-
-    if (!item) return null;
-
-    const itemPrice = item.price || 0;
-    const totalPrice = item.total_amount || (itemPrice * quantity);
-
-    return(
-        <div className="cart-item-card">
-            <div className="cart-item-image">
-                <img 
-                    src={item.image || "https://png.pngtree.com/thumb_back/fh260/background/20240408/pngtree-zinger-burger-ad-poster-design-image_15710081.jpg"} 
-                    alt={item.product_name || "Product"}
-                />
-            </div>
-            
-            <div className="cart-item-details">
-                <div className="cart-item-info">
-                    <h3 className="cart-item-name">{item.product_name || `Product ID: ${item.product_id}`}</h3>
-                    <p className="cart-item-description">
-                        {item.description || `Product from ${item.business_name}`}
-                    </p>
-                    {item.unit_type && (
-                        <span className="cart-item-unit">Unit: {item.unit_type}</span>
-                    )}
+                  
                 </div>
-                
-                <div className="cart-item-actions">
-                    <div className="cart-item-quantity-section">
-                        <label className="quantity-label">Quantity:</label>
-                        <div className="quantity-controls">
-                            <button 
-                                className="quantity-btn minus" 
-                                onClick={decrement}
-                                aria-label="Decrease quantity"
-                            >
-                                −
-                            </button>
-                            <span className="quantity-value">
-                                {quantity}
-                                {item.unit_type && <span className="unit-display"> {item.unit_type}</span>}
-                            </span>
-                            <button 
-                                className="quantity-btn plus" 
-                                onClick={increment}
-                                aria-label="Increase quantity"
-                            >
-                                +
-                            </button>
-                        </div>
+
+                <div className="cart_right">
+                    <div className="cart_right_top">
+                    <p className="price_label">Subtotal</p>
+                    <span className="subtotal">Rs{item.total_amount}</span>
                     </div>
-                    
-                    <div className="cart-item-price-section">
-                        <div className="price-per-unit">
-                            <span className="price-label">Price:</span>
-                            <span className="price-value">PKR {itemPrice.toFixed(2)}</span>
-                            {item.unit_type && <span className="price-unit">/{item.unit_type}</span>}
-                        </div>
-                        <div className="price-total">
-                            <span className="total-label">Total:</span>
-                            <span className="total-value">PKR {totalPrice.toFixed(2)}</span>
-                        </div>
+
+                    <div className="cart_right_bottom">
+                        <button className="remove_btn" onClick={() => removeFromCart(item.id) & loadCart()}>
+                        Remove
+                        </button>
                     </div>
+                  
+                  
                 </div>
+
+              </div>
+            ))}
+
+            <div className="vendor_total">
+              <span>Subtotal</span>
+              <strong>Rs{store.subtotal}</strong>
             </div>
-            
-            <div className="cart-item-remove">
-                <button 
-                    className="remove-btn" 
-                    onClick={() => onDelete && onDelete(item.id)}
-                    aria-label="Remove item"
-                >
-                    <MdDeleteOutline />
-                </button>
-            </div>
+
+          </div>
+        ))}
+      </div>
+
+      {/* RIGHT SIDE - SUMMARY */}
+      <div className="cart_summary">
+        <h3>Order Summary</h3>
+
+        <div className="summary_row">
+          <span>Item Count:</span>
+          <strong>{totalItems}</strong>
         </div>
-    );
+
+        <div className="summary_row">
+          <span>Unique Items:</span>
+          <strong>{stores.length}</strong>
+        </div>
+
+        <div className="summary_row">
+          <span>Subtotal:</span>
+          <strong>Rs{totalAmount}</strong>
+        </div>
+
+        <div className="summary_total">
+          <span>Total:</span>
+          <strong>Rs{totalAmount}</strong>
+        </div>
+
+        <button 
+          className="primary-btn"
+          onClick={() => {
+            if (!isAuthenticated) {
+              // Store that user came from cart
+              sessionStorage.setItem('signupRedirect', '/yourcart');
+              setShowSignupModal(true);
+            } else {
+              // Handle checkout
+              alert('Checkout functionality coming soon!');
+            }
+          }}
+        >
+          Proceed to Checkout
+        </button>
+      </div>
+
+      <SignupModal 
+        isOpen={showSignupModal}
+        onClose={() => setShowSignupModal(false)}
+        redirectPath="/yourcart"
+      />
+
+    </div>
+  );
 }
 
 export default Your_cart;
