@@ -1,66 +1,59 @@
 import { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { MdDeleteOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { getCartByStores, getCart, removeFromCart, updateCartItemQuantity, getCartTotal, getCartItemsCount } from "../../utils/cartUtils";
-import { useAuth } from "../../contexts/AuthContext";
-import SignupModal from "../Common/SignupModal";
 import "../../Styles/Your_cart/Your_cart.css"
 
 function Your_cart(){
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
     const [stores, setStores] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [showSignupModal, setShowSignupModal] = useState(false);
 
-    useEffect(() => {
-        loadCartData();
-    }, []);
+  useEffect(() => {
+    loadCart();
+  }, []);
 
-    const loadCartData = () => {
-        setLoading(true);
-        try {
-            // Get cart organized by stores
-            const storesData = getCartByStores();
-            setStores(storesData);
-            
-            // Get totals
-            setTotalAmount(getCartTotal());
-            setTotalItems(getCartItemsCount());
-        } catch (err) {
-            console.error("Error loading cart:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const loadCart = () => {
+    setStores(getCartByStores());
+    setTotalAmount(getCartTotal());
+    setTotalItems(getCartItemsCount());
+  };
 
-    const handleDeleteItem = (itemId) => {
-        removeFromCart(itemId);
-        loadCartData(); // Reload cart data
-    };
+  const changeQty = (id, qty) => {
+    if (qty <= 0) removeFromCart(id);
+    else updateCartItemQuantity(id, qty);
+    loadCart();
+  };
 
-    const handleQuantityChange = (itemId, newQuantity) => {
-        if (newQuantity <= 0) {
-            handleDeleteItem(itemId);
-            return;
-        }
-        updateCartItemQuantity(itemId, newQuantity);
-        loadCartData(); // Reload cart data
-    };
+  return (
+    <div className="cart_page">
 
-    return(
-        <>
-        <div className="cart_main">
-            <div className="cart_home_icon">
-            </div>
-            <div className="cart_outer">
-                <div className="cart_title">
-                    <h3>Your Cart</h3>
+      {/* LEFT SIDE - VENDORS */}
+      <div className="cart_left">
+
+        {stores.map((store) => (
+          <div className="vendor_card" key={store.business_name}>
+
+            <h3 className="vendor_name">{store.business_name}</h3>
+
+            {store.items.map(item => (
+              <div className="cart_row" key={item.id}>
+
+                <img src={item.image} className="cart_img" alt="" />
+
+                <div className="cart_info">
+                  <h4>{item.product_name}</h4>
+                  <span className="price_each">Rs{item.price} each</span>
+                  <div className="qty_box_row">
+                    <p>Quantity:</p>
+                    <div className="qty_box">
+                     <button onClick={() => changeQty(item.id, item.quantity - 1)}>-</button>
+                     <span>{item.quantity}</span>
+                     <button onClick={() => changeQty(item.id, item.quantity + 1)}>+</button>
+                 </div>
                 </div>
                 
                 {loading ? (
@@ -110,14 +103,8 @@ function Your_cart(){
                             <div className="checkout_btn">
                                 <button 
                                     onClick={() => { 
-                                        if (!isAuthenticated) {
-                                            // Store that user came from cart
-                                            sessionStorage.setItem('signupRedirect', '/yourcart');
-                                            setShowSignupModal(true);
-                                        } else {
-                                            // Handle checkout
-                                            alert('Checkout functionality coming soon!');
-                                        }
+                                        // Handle checkout
+                                        alert('Checkout functionality coming soon!');
                                     }}
                                     className="primary-btn4">
                                     Check Out
@@ -129,11 +116,6 @@ function Your_cart(){
             </div>
 
         </div>
-        <SignupModal 
-            isOpen={showSignupModal}
-            onClose={() => setShowSignupModal(false)}
-            redirectPath="/yourcart"
-        />
         <ToastContainer />
         </>
     );
@@ -241,3 +223,5 @@ function Cart_card({ item, onDelete, onQuantityChange }){
         </div>
     );
 }
+
+export default Your_cart;
