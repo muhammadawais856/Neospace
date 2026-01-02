@@ -6,8 +6,13 @@ export const cartApi = {
     return await api.post('/cart', cartData);
   },
 
-  // Get user cart
+  // Get user cart (YouCart GET)
   getUserCart: async (userId) => {
+    return await api.get(`/cart/${userId}`);
+  },
+
+  // Get user cart (alias for YouCart)
+  getYouCart: async (userId) => {
     return await api.get(`/cart/${userId}`);
   },
 

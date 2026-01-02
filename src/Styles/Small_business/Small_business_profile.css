@@ -18,7 +18,7 @@
   position: absolute;
   left: 14px ;
   top: 70px;
-  font-size: 25px;
+  font-size: var(--font-size-h2);
   cursor: pointer;
 }
 
@@ -48,7 +48,7 @@
 
 /* Title styling */
 .business_profile_name {
-  font-size: 35px;
+  font-size: var(--font-size-h1);
   font-weight: bold;
   margin-bottom: 0px;
 }
@@ -73,7 +73,7 @@
 }
 
 .rating_card h3 {
-  font-size: 45px;
+  font-size: var(--font-size-h1);
   font-weight: bold;
   margin: 0;
 }

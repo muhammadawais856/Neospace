@@ -17,7 +17,7 @@
 }
 
 .para h3{
-  font-size: 1.25rem;
+  font-size: var(--font-size-h3);
   margin: 0;
 }
 

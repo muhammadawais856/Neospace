@@ -69,12 +69,14 @@ const navigate = useNavigate();
   if (loading) {
     return (
       <div className="businessmain">
-        <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
         <div className="businessouter">
           <div className="businesstop">
             <div className="businessleft">
-              <h3>Small Businesses</h3>
-              <p>Serving with passion, growing with trust. </p>
+              <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
+              <div className="business_left_in">
+                <h3>Small Businesses</h3>
+                <p>Serving with passion, growing with trust. </p>
+              </div>
             </div>
           </div>
           <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
@@ -86,12 +88,14 @@ const navigate = useNavigate();
   if (error) {
     return (
       <div className="businessmain">
-        <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
         <div className="businessouter">
           <div className="businesstop">
             <div className="businessleft">
-              <h3>Small Businesses</h3>
-              <p>Serving with passion, growing with trust. </p>
+              <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
+              <div className="business_left_in">
+                <h3>Small Businesses</h3>
+                <p>Serving with passion, growing with trust. </p>
+              </div>
             </div>
           </div>
           <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
@@ -104,7 +108,6 @@ const navigate = useNavigate();
   return (
     
     <div className="businessmain">
-      <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
       <div className="businessright">
             <button  
           onClick={() => {
@@ -122,8 +125,11 @@ const navigate = useNavigate();
       <div className="businessouter">
         <div className="businesstop">
           <div className="businessleft">
-            <h3>Small Businesses</h3>
-            <p>Serving with passion, growing with trust. </p>
+            <div className="arrow_smallbusiness" onClick={() => navigate('/')}> <FaArrowLeft /></div>
+            <div className="business_left_in">
+              <h3>Small Businesses</h3>
+              <p>Serving with passion, growing with trust. </p>
+            </div>
           </div>
           
           

@@ -1,39 +1,47 @@
 
 /* Wrap arrow and heading in a flex container */
 .arrow_birthday {
-  position: absolute;
+  /* position: absolute; */
   top: 28px;       /* adjust this number to move arrow downward */
   left: 15px;      /* same horizontal place */
   width: 40px;
   height: 40px;
-  font-size: 24px;
+  font-size: var(--font-size-icon);
   cursor: pointer;
   display: flex;
   align-items: center;
+  margin-right: 10px;
   justify-content: center;
   color: var(--text_color);
   transition: all 0.3s ease;
 }
-.Carpool_arrow {
-  position: absolute;
-  top: 28px;       /* adjust this number to move arrow downward */
-  left: 15px;      /* same horizontal place */
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text_color);
-  transition: all 0.3s ease;
-}
-
 .birthdayright{
    position: absolute;
   right: 80px;
   top: 40px;
 }
+/* Advertisement Banner Section */
+.birthday-ad-banner {
+  width: 100vw;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.birthday-ad-banner .ad-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 /* Parent must be relative */
 .main {
   position: relative;
@@ -41,8 +49,10 @@
   max-width: 1250px;
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   align-items: baseline;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 
@@ -60,20 +70,27 @@
 
 .birthdayleft {
   display: flex;
-  flex-direction: column;   /* arrange in vertical rows */
-  align-items: flex-start;  /* keep everything left aligned */
-  gap: 2px;                 /* small space between h3 and p */
+  flex-direction: row;   /* arrange in horizontal row */
+  align-items: center;   /* center arrow with heading+description block */
+  gap: 10px;             /* space between arrow and text block */
+}
+
+.birthday_left_in {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
 }
 
 .birthdayleft h3 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: var(--font-size-h3);
 }
 
 .birthdayleft p {
   margin: 0;
   color: var(--desc_color);
-  font-size: 1rem;
+  font-size: var(--font-size-body);
 }
 
 .page-btn {
@@ -84,7 +101,7 @@
   color: #333;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: var(--font-size-button);
   font-weight: 500;
   transition: all 0.25s ease-in-out;
   border: none;
@@ -125,12 +142,58 @@
   }
 
   .birthdaytop .birthdayleft p {
-    font-size: 12px;           /* smaller paragraph */
+    font-size: var(--font-size-small);           /* smaller paragraph */
   }
 
   .birthdaytop .birthdayright .offerservicebtn {
     padding: 6px 12px;         /* smaller button */
-    font-size: 14px;
+    font-size: var(--font-size-button);
+  }
+
+  /* Make heading and button on same line for mobile */
+  .birthdaytop {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .birthdayleft {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .birthday_left_in h3 {
+    font-size: var(--font-size-h4);         /* smaller heading to fit */
+  }
+
+  .birthdayright {
+    position: static;          /* remove absolute positioning */
+    margin-left: auto;
+  }
+
+  .birthdayright .primary-btn2 {
+    padding: 6px 14px;
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+  }
+  
+  /* Match Visit Profile button size on mobile */
+  .birthdaysec3 .primary-btn {
+    padding: 6px 14px;
+    font-size: var(--font-size-small);
+    width: auto;
+  }
+
+  /* Smaller arrows for small screens */
+  .arrow_birthday, .Carpool_arrow {
+    width: 26px;
+    height: 26px;
+    font-size: var(--font-size-h4);
+    margin-right: 8px;
+  }
+
+  .arrow_birthday svg, .Carpool_arrow svg {
+    height: 18px !important;
+    width: 18px !important;
   }
 }
 
@@ -143,64 +206,93 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 10px 15px;
+    width: 100%;
   }
+
+  /* Advertisement banner responsive */
+  .birthday-ad-banner {
+    width: 100vw;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 15px;
+  }
+
   .carpoolcard{
     width: 100% !important;
   }
 
-  /* Move right button to top right */
-  .birthdayright {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-  }
-
   /* Make arrow smaller & aligned correctly */
   .arrow_birthday, .Carpool_arrow {
-    width: 25px;
-    height: 25px;
-    font-size: 22px;
-    margin-bottom: 10px;
-    margin-left: 0;
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-icon);
+    margin-right: 6px;
+    margin-bottom: 0;
     margin-top: 0;
-    top: 20px;
-    left: 15px;
   }
 
-  /* Adjust the right-side button */
-  .offerservicebtn {
-    margin-top: -35px;   /* same as business version */
-    padding: 4px 10px;
-    font-size: 12px;
-    align-self: flex-start;
+  .arrow_birthday svg, .Carpool_arrow svg {
+    height: 16px !important;
+    width: 16px !important;
   }
 
-  /* Title + subtitle adjust */
+  /* Heading and button on same line */
   .birthdaytop {
-    padding-top: 50px;
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    padding-left: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
   }
 
-  /* Smaller heading */
-  .birthdayleft h3 {
-    font-size: 30px;
+  .birthdayleft {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Smaller heading to fit with button */
+  .birthday_left_in h3 {
+    font-size: var(--font-size-h4);
     margin: 0;
   }
 
   /* Smaller subtitle */
-  .birthdayleft p {
-    font-size: 12px;
+  .birthday_left_in p {
+    font-size: var(--font-size-xs);
     margin: 0;
     color: #666;
+  }
+
+  /* Button on same line */
+  .birthdayright {
+    position: static;
+    margin-left: auto;
+    top: auto;
+    right: auto;
+  }
+
+  .birthdayright .primary-btn2 {
+    padding: 5px 12px;
+    font-size: var(--font-size-small);
+    white-space: nowrap;
+  }
+  
+  /* Match Visit Profile button size on mobile */
+  .birthdaysec3 .primary-btn {
+    padding: 5px 12px;
+    font-size: var(--font-size-small);
+    width: auto;
   }
   .rating_birthday {
       display: flex;
       justify-content: start;
-      gap: 5px;
-      margin: 10px 0;
+      gap: 2px;
+      margin: 0;
   }
 
 
@@ -241,10 +333,29 @@
   margin: 0px;
 }
 
+@media (max-width: 700px) {
+  .carpoolavailabe .available {
+    font-size: 15px;
+  }
+}
+
 .carpoolbtn .primary-btn {
-  padding: 6px 12px;           /* adjust button size */
-  font-size: 14px;
+  padding: 8px 16px;           /* match base button size */
+  font-size: var(--font-size-button);
   cursor: pointer;
+}
+
+/* Mobile: Match button sizes for Carpool */
+@media (max-width: 700px) {
+  .carpoolbtn .primary-btn {
+    padding: 5px 12px;
+    font-size: var(--font-size-small);
+  }
+  
+  .birthdayright .primary-btn2 {
+    padding: 5px 12px;
+    font-size: var(--font-size-small);
+  }
 }
 
 .carpoolcard {

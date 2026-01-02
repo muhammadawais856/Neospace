@@ -22,7 +22,7 @@
 }
 
 .rate_star {
-  font-size: 28px;
+  font-size: var(--font-size-title);
   color: #d0cdcd;
   cursor: pointer;
   transition: color 0.2s;
@@ -81,7 +81,7 @@
   border-radius: 10px;
   cursor: pointer;
   color: var(--text_color);
-  font-size: 12px;
+  font-size: var(--font-size-xs);
 }
 
 .rateproduct_btn {

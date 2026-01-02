@@ -20,6 +20,11 @@ export const birthdaysApi = {
   getOfferServiceFormData: async () => {
     return await api.get('/Birthdays/offer_services');
   },
+
+  // Get birthday reviews
+  getBirthdayReviews: async (freelancerId) => {
+    return await api.get(`/Birthdays/birthdayreviews?freelancer_id=${freelancerId}`);
+  },
 };
 
 

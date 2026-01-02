@@ -16,7 +16,7 @@ BACK ARROW
     position: absolute;
     left: 30px;
     top: 30px;
-    font-size: 22px;
+    font-size: var(--font-size-h4);
     cursor: pointer;
 }
 
@@ -31,7 +31,7 @@ OUTER WRAPPER
 
 .nustfruita_maintitle h3 {
     margin-left: 0px;
-    font-size: 22px;
+    font-size: var(--font-size-h4);
 }
 
 /* ===============================
@@ -80,7 +80,7 @@ IMAGE
     color: white;
     padding: 5px 22px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: var(--font-size-small);
     z-index: 10;
     border-radius: 4px;
     text-align: center;
@@ -101,7 +101,7 @@ CARD BODY
 NAME & PRICE
 ================================ */
 .nustfruita_businessname {
-    font-size: 16px;
+    font-size: var(--font-size-body);
     font-weight: 600;
     margin-bottom: 6px;
 }
@@ -113,16 +113,16 @@ NAME & PRICE
 }
 
 .nustfruita_price_PKR {
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 .nustfruita_price {
-    font-size: 15px;
+    font-size: var(--font-size-small);
     font-weight: bold;
 }
 
 .nustfruita_price_kg {
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 /* ===============================
@@ -148,13 +148,13 @@ COUNTER SECTION
     border: none;
     background-color: #f2f2f2;
     cursor: pointer;
-    font-size: 18px;
+    font-size: var(--font-size-h4);
 }
 
 .counter_value2 {
     width: 40px;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 /* ===============================
@@ -197,7 +197,7 @@ RESPONSIVE STYLES FOR 500px
 
     .nustfruita_maintitle h3 {
         margin-left: 40px !important;
-        font-size: 22px;
+        font-size: var(--font-size-h4);
         position: absolute;
     }
 

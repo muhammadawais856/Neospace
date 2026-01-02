@@ -17,7 +17,8 @@
 }
 
 .goldStar{
-  color: rgb(255, 187, 0);
+  color: var(--star-color);
+  filter: drop-shadow(0 0 2px rgba(0, 234, 255, 0.3));
 }
 
 .grayStar{
@@ -75,26 +76,36 @@
 
 .profilename h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--font-size-h4);  /* Smaller for desktop */
   font-weight: 600;
+}
+
+/* Increase for mobile */
+@media (max-width: 850px) {
+  .profilename h3 {
+    font-size: var(--font-size-h3);  /* Larger for mobile */
+  }
 }
 
 .rating {
   display: flex;
   gap: 3px;
-  margin-top: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-/* Featured button on the right */
+/* Featured star on the right */
 .featured_birthday {
-  color: #0571ff;              /* dark golden */
-  flex-shrink: 0; /* prevent shrinking */
-  font-size: 16px;
-  font-weight: 600;
+  color: #0571ff;
+  flex-shrink: 0;
   display: flex;
-  align-items: end;
+  align-items: center;
+  justify-content: center;
   padding: 0;
-  gap: 5px;
+}
+
+.featured_birthday .icon {
+  font-size: 24px;
 }
 
 /* Description section */
@@ -104,7 +115,7 @@
 
 .description {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   line-height: 1.4;
   color: #333;
 }
@@ -119,7 +130,9 @@
 }
 
 .birthdaysec3 .primary-btn{
-  width: 170px;
+  width: auto;  /* Remove fixed width for better responsive behavior */
+  padding: 8px 16px;
+  font-size: var(--font-size-button);
 }
 
 /* Responsive for mobile */
@@ -141,20 +154,24 @@
     height: 40px;
   }
 
-  /* Shrink name text */
-  .profilename h3 {
-    font-size: 14px;
-  }
 
-  /* Shrink rating stars */
+  /* Shrink rating stars and reduce gap */
+  .rating {
+    gap: 1px;
+  }
+  
   .rating svg {
     width: 14px;
     height: 14px;
   }
+  
+  .rating_birthday {
+    gap: 1px;
+  }
 
   /* Shrink Featured button */
   .featured-btn {
-    font-size: 14px;
+    font-size: var(--font-size-small);
     padding: 3px 6px;
   }
 

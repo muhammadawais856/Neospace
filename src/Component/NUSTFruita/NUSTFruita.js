@@ -1,6 +1,9 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addToCart } from "../../utils/cartUtils";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../Styles/NustFruita/Nustfruita.css";
 import { nustfruitaApi } from "../../services/nustfruitaApi";
 
@@ -100,12 +103,14 @@ function NUSTFruita(){
                     {data.slice(startIdx, startIdx + 9).map(item => (
                         <Nustfruita_card
                             key={item.id}
+                            id={item.id}
                             imgurl={item.image}
                             name={item.name}
                             price={item.price}
                             type={`Per ${item.unit_type || 'kg'}`}
                             type2={item.unit_type || 'kg'}
                             stock={item.stock > 0}
+                            unit_type={item.unit_type || 'kg'}
                          />
                         ))}
 
@@ -123,18 +128,44 @@ function NUSTFruita(){
             
 
         </div>
-        
+        <ToastContainer />
         </>
     )
 }
 
 export default NUSTFruita;
 
-function Nustfruita_card({ name, price, type, type2, imgurl, stock }) {
+function Nustfruita_card({ id, name, price, type, type2, imgurl, stock, unit_type }) {
     const [quantity, setQuantity] = useState(1);
     
-      const increment = () => setQuantity((prev) => prev + 0.5);
-      const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 0.5 : 0.5));
+    const increment = () => setQuantity((prev) => prev + 0.5);
+    const decrement = () => setQuantity((prev) => (prev > 0.5 ? prev - 0.5 : 0.5));
+
+    const handleAddToCart = () => {
+        if (!stock) {
+            toast.error("Product is out of stock");
+            return;
+        }
+        
+        // Get user data from localStorage
+        const userData = localStorage.getItem('userData');
+        const userInfo = userData ? JSON.parse(userData) : { name: 'default_user' };
+        
+        addToCart({
+            business_name: 'NUSTFruita',
+            product_id: id,
+            product_name: name,
+            price: price,
+            quantity: quantity,
+            user_id: userInfo.name || 'default_user',
+            image: imgurl || '',
+            store_type: 'nustfruita',
+            description: `${name} - ${type}`,
+            unit_type: unit_type || 'kg'
+        });
+        
+        toast.success(`${name} added to cart!`);
+    };
 
     return(
         <>
@@ -159,10 +190,10 @@ function Nustfruita_card({ name, price, type, type2, imgurl, stock }) {
                 </div>
         
                 <div className="businesssec2">
-                    <div class="counter_box2">
-                        <button class="counter_btn2" onClick={decrement}>−</button>
-                        <span class="counter_value2">{quantity}</span>
-                        <button class="counter_btn2" onClick={increment}>+</button>
+                    <div className="counter_box2">
+                        <button className="counter_btn2" onClick={decrement}>−</button>
+                        <span className="counter_value2">{quantity}</span>
+                        <button className="counter_btn2" onClick={increment}>+</button>
                     </div>
                     <div className="nustfruita_price_kg">
                         <p className="nustfruita_price_kg">{type2}</p>
@@ -171,7 +202,10 @@ function Nustfruita_card({ name, price, type, type2, imgurl, stock }) {
         
                 <div className="nustfruita_btn">
                     <button 
-                    className="primary-btn">Add To Cart</button>
+                    onClick={handleAddToCart}
+                    className="primary-btn"
+                    disabled={!stock}
+                    >Add To Cart</button>
                 </div>
         
               </div>

@@ -21,6 +21,11 @@ export const smallBusinessApi = {
   offerService: async (serviceData) => {
     return await api.post('/Small_business/offer_services', serviceData);
   },
+
+  // Get small business item by ID
+  getBusinessItem: async (productId) => {
+    return await api.get(`/Small_business/Smallbusinessitem/${productId}`);
+  },
 };
 
 

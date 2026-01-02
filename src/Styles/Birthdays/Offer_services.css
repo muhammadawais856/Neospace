@@ -19,7 +19,7 @@
 /* Arrow as left column */
 .offerserviceback {
   flex: 0 0 60px; /* fixed width for arrow */
-  font-size: 28px;
+  font-size: var(--font-size-title);
   cursor: pointer;
   color: var(--text_color);
   display: flex;
@@ -51,14 +51,14 @@
 
 
 .offerservicesheadertitle {
-  font-size: 28px;
+  font-size: var(--font-size-title);
   font-weight: bold;
   margin: 0;
   color: var(--text_color);
 }
 
 .offerserviceheadersubtitle {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   color: var(--desc_color);
   margin-top: 5px;
   margin-bottom: 0;
@@ -94,7 +94,7 @@
 .offerservicespricinginput,
 .offerservicesdescriptioninput {
   padding: 10px;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   border: 1px solid #ccc;
   border-radius: 6px;
   width: 100%;
@@ -156,7 +156,7 @@
   background-color: #4caf50;
   color: white;
   font-weight: bold;
-  font-size: 16px;
+  font-size: var(--font-size-body);
   cursor: pointer;
   transition: 0.3s;
 }
@@ -178,7 +178,7 @@
 .offercontact,
 .offerschool {
   display: flex;
-  font-size: 14px;
+  font-size: var(--font-size-small);
   gap: 30px;
 
 }
@@ -236,18 +236,18 @@
 
   /* Decrease title and subtitle font size */
   .offerservicesheadertitle {
-    font-size: 22px;
+    font-size: var(--font-size-h4);
   }
 
   .offerserviceheadersubtitle {
-    font-size: 14px;
+    font-size: var(--font-size-small);
   }
 
   /* Inputs: stack vertically and shrink size */
   .offerservicesec5 input,
   .offerservicesdescriptioninput {
     flex: 1 1 100%;      /* full width */
-    font-size: 13px;     /* slightly smaller text */
+    font-size: var(--font-size-xs);     /* slightly smaller text */
     padding: 8px;        /* smaller padding */
   }
 

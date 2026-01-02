@@ -6,6 +6,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { birthdaysApi } from "../../services/birthdaysApi";
+// Import advertisement images - update these paths with your actual images
+// Replace the paths below with your actual desktop and mobile advertisement images
+import adDesktop from "../../assets/ad-desktop.png";
+import adMobile from "../../assets/ad-mobile.png";
 
 
 function Birthdays() {
@@ -68,57 +72,86 @@ const navigate = useNavigate();
 
   if (loading) {
     return (
-      <div className="main">
-        <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
-        <div className="birthdayright">
-          <button onClick={() => {navigate('/offerservices')}} className="primary-btn2">Offer Services</button>
+      <>
+        <div className="birthday-ad-banner">
+          <picture>
+            <source media="(max-width: 768px)" srcSet={adMobile} />
+            <img src={adDesktop} alt="Advertisement" className="ad-image" />
+          </picture>
         </div>
-        <div className="birthdayouter">
+        <div className="main">
+          {/* Advertisement Banner Section */}
+          <div className="birthdayouter">
           <div className="birthdaytop">
             <div className="birthdayleft">
-              <h3>Birthdays</h3>
-              <p>Celebrate birthdays with us </p>
+              <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
+              <div className="birthday_left_in">
+                <h3>Birthdays</h3>
+                <p>Celebrate birthdays with us </p>
+              </div>
+            </div>
+            <div className="birthdayright">
+              <button onClick={() => {navigate('/offerservices')}} className="primary-btn2">Offer Services</button>
             </div>
           </div>
           <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="main">
-        <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
-        <div className="birthdayright">
-          <button onClick={() => {navigate('/offerservices')}} className="primary-btn2">Offer Services</button>
+      <>
+        <div className="birthday-ad-banner">
+          <picture>
+            <source media="(max-width: 768px)" srcSet={adMobile} />
+            <img src={adDesktop} alt="Advertisement" className="ad-image" />
+          </picture>
         </div>
-        <div className="birthdayouter">
+        <div className="main">
+          <div className="birthdayouter">
           <div className="birthdaytop">
             <div className="birthdayleft">
-              <h3>Birthdays</h3>
-              <p>Celebrate birthdays with us </p>
+              <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
+              <div className="birthday_left_in">
+                <h3>Birthdays</h3>
+                <p>Celebrate birthdays with us </p>
+              </div>
+            </div>
+            <div className="birthdayright">
+              <button onClick={() => {navigate('/offerservices')}} className="primary-btn2">Offer Services</button>
             </div>
           </div>
           <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   return (
-    
-    <div className="main">
-      <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
-      <div className="birthdayright">
-            <button  onClick={() => {navigate('/offerservices')}}
-            className="primary-btn2">Offer Services</button>
-          </div>
-      <div className="birthdayouter">
+    <>
+      <div className="birthday-ad-banner">
+        <picture>
+          <source media="(max-width: 768px)" srcSet={adMobile} />
+          <img src={adDesktop} alt="Advertisement" className="ad-image" />
+        </picture>
+      </div>
+      <div className="main">
+        <div className="birthdayouter">
         <div className="birthdaytop">
           <div className="birthdayleft">
-            <h3>Birthdays</h3>
-            <p>Celebrate birthdays with us </p>
+            <div className="arrow_birthday" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
+            <div className="birthday_left_in">
+              <h3>Birthdays</h3>
+              <p>Celebrate birthdays with us </p>
+            </div>
+          </div>
+          <div className="birthdayright">
+            <button  onClick={() => {navigate('/offerservices')}}
+            className="primary-btn2">Offer Services</button>
           </div>
         </div>
 
@@ -130,7 +163,6 @@ const navigate = useNavigate();
               name={item.name}
               rating={item.rating}
               description={item.description}
-              featured={item.featured}
               profileImage={item.profile_image}
             />
           ))}
@@ -139,14 +171,15 @@ const navigate = useNavigate();
         <div className="page-buttons">
           {renderPages()}
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
 export default Birthdays;
 
-function BirthdayCard({ id, name, rating, description, featured, profileImage }) {
+function BirthdayCard({ id, name, rating, description, profileImage }) {
   const navigate = useNavigate();
   return (
     <div className="birthdaycard">
@@ -167,13 +200,6 @@ function BirthdayCard({ id, name, rating, description, featured, profileImage })
             </div>
           </div>
         </div>
-
-        {featured && (
-          <div className="featured_birthday">
-            <span className="icon">★</span>
-            Featured
-          </div>
-        )}
       </div>
 
       <div className="birthdaysec2">

@@ -154,7 +154,8 @@ function Small_business_profile(){
                         name={item.name}
                         description={item.description}
                         price={item.price}
-                        rating={item.rating}/>
+                        rating={item.rating}
+                        businessId={businessId}/>
                    ))}
                     
                 </div>
@@ -187,11 +188,11 @@ function Ratingcard({ rating, ordersCompleted }) {
     );
 }
 
-function Carditems({id, imgurl, name, description, price, rating}){
+function Carditems({id, imgurl, name, description, price, rating, businessId}){
      const navigate = useNavigate();
 
       const handleClick = () => {
-      navigate(`/Smallbusinessitem?productId=${id}`); // navigate on click
+      navigate(`/Smallbusinessitem?productId=${id}${businessId ? `&businessId=${businessId}` : ''}`); // navigate on click with businessId
      }  ;
     return(
         <>

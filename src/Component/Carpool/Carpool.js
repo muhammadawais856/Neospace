@@ -9,11 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
 import { carpoolApi } from "../../services/carpoolApi";
+// Import advertisement images
+import adDesktopCar from "../../assets/ad-desktopcar.png";
+import adMobileCar from "../../assets/ad-mobilecar.png";
 
 
 function Carpool() {
-  
-const navigate = useNavigate();
+
+  const navigate = useNavigate();
   const [startIdx, setStartIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState([]);
@@ -41,7 +44,7 @@ const navigate = useNavigate();
   }
 
   function calculatePages(totalCards) {
-    return Math.ceil(totalCards / 10); 
+    return Math.ceil(totalCards / 10);
   }
 
   useEffect(() => {
@@ -51,92 +54,117 @@ const navigate = useNavigate();
   }, [data]);
 
   function renderPages() {
-  const buttons = [];
-  for (let i = 0; i < totalPages; i++) {
-    buttons.push(
-      <button
-        key={i}
-        className={`page-btn ${startIdx === i * 10 ? 'active' : ''}`}
-        onClick={() => setStartIndex(i * 10)}
-      >
-        {i + 1}
-      </button>
-    );
+    const buttons = [];
+    for (let i = 0; i < totalPages; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className={`page-btn ${startIdx === i * 10 ? 'active' : ''}`}
+          onClick={() => setStartIndex(i * 10)}
+        >
+          {i + 1}
+        </button>
+      );
+    }
+    return buttons;
   }
-  return buttons;
-}
 
   if (loading) {
     return (
-      <div className="main">
-        <div className="Carpool_arrow" onClick={() => {navigate("/")}}> <FaArrowLeft /></div>
-        <div className="birthdayouter">
-          <div className="birthdaytop">
-            <div className="birthdayleft">
-              <h3>Carpool</h3>
-              <p>Ride Together, Save Together </p>
-            </div>
-          </div>
-          <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+      <>
+        <div className="birthday-ad-banner">
+          <picture>
+            <source media="(max-width: 768px)" srcSet={adMobileCar} />
+            <img src={adDesktopCar} alt="Advertisement" className="ad-image" />
+          </picture>
         </div>
-      </div>
+        <div className="main">
+          <div className="Carpool_arrow" onClick={() => { navigate("/") }}> <FaArrowLeft /></div>
+          <div className="birthdayouter">
+            <div className="birthdaytop">
+              <div className="birthdayleft">
+                <h3>Carpool</h3>
+                <p>Ride Together, Save Together </p>
+              </div>
+            </div>
+            <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+          </div>
+        </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="main">
-        <div className="Carpool_arrow" onClick={() => {navigate("/")}}> <FaArrowLeft /></div>
-        <div className="birthdayouter">
-          <div className="birthdaytop">
-            <div className="birthdayleft">
-              <h3>Carpool</h3>
-              <p>Ride Together, Save Together </p>
-            </div>
-          </div>
-          <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
+      <>
+        <div className="birthday-ad-banner">
+          <picture>
+            <source media="(max-width: 768px)" srcSet={adMobileCar} />
+            <img src={adDesktopCar} alt="Advertisement" className="ad-image" />
+          </picture>
         </div>
-      </div>
+        <div className="main">
+          <div className="Carpool_arrow" onClick={() => { navigate("/") }}> <FaArrowLeft /></div>
+          <div className="birthdayouter">
+            <div className="birthdaytop">
+              <div className="birthdayleft">
+                <h3>Carpool</h3>
+                <p>Ride Together, Save Together </p>
+              </div>
+            </div>
+            <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
+          </div>
+        </div>
+      </>
     );
   }
 
 
   return (
-    
-    <div className="main">
-      <div className="Carpool_arrow" onClick={() => {navigate("/")}}> <FaArrowLeft /></div>
-      <div className="birthdayouter">
-        <div className="birthdaytop">
-          <div className="birthdayleft">
-            <h3>Carpool</h3>
-            <p>Ride Together, Save Together </p>
+    <>
+      <div className="birthday-ad-banner">
+        <picture>
+          <source media="(max-width: 768px)" srcSet={adMobileCar} />
+          <img src={adDesktopCar} alt="Advertisement" className="ad-image" />
+        </picture>
+      </div>
+      <div className="main">
+        <div className="birthdayouter">
+          <div className="birthdaytop">
+            <div className="birthdayleft">
+              <div className="arrow_birthday" onClick={() => { navigate("/") }}> <FaArrowLeft /></div>
+              <div className="birthday_left_in">
+                <h3>Carpool</h3>
+                <p>Ride Together, Save Together </p>
+              </div>
+            </div>
+            <div className="birthdayright">
+              <button onClick={() => { navigate('/Carpoolofferservices') }}
+                className="primary-btn2">Offer Services</button>
+            </div>
           </div>
-          <div className="birthdayright">
-            <button  onClick={() => {navigate('/Carpoolofferservices')}}
-            className="primary-btn2">Offer Services</button>
+
+          <div className="birthdaybottom">
+            {data.slice(startIdx, startIdx + 10).map((item) => (
+              <BirthdayCard
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                location={item.location}
+                description={item.description}
+                car={item.vehicle_type === "Car"}
+                available={`${item.seats_available} seat${item.seats_available > 1 ? 's' : ''} available`}
+                image={item.image}
+              />
+            ))}
           </div>
-        </div>
 
-        <div className="birthdaybottom">
-          {data.slice(startIdx, startIdx + 10).map((item) => (
-            <BirthdayCard
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              location={item.location}
-              description={item.description}
-              car={item.vehicle_type === "Car"}
-              available={`${item.seats_available} seat${item.seats_available > 1 ? 's' : ''} available`}
-              image={item.image}
-            />
-          ))}
-        </div>
-
-        <div className="page-buttons">
-          {renderPages()}
+          <div className="page-buttons">
+            {renderPages()}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -161,7 +189,7 @@ function BirthdayCard({ id, name, car, description, location, available, image }
         </div>
 
         <div className="car">
-            {car ? <FaCar className="vehicleIcon" /> : <RiMotorbikeFill className="vehicleIcon" />}
+          {car ? <FaCar className="vehicleIcon" /> : <RiMotorbikeFill className="vehicleIcon" />}
         </div>
       </div>
 
@@ -169,17 +197,17 @@ function BirthdayCard({ id, name, car, description, location, available, image }
         <p className="description">{description}</p>
       </div>
 
-        <div className="carpoolrow">
-            <div className="carpoolavailabe">
-               <p className="available">{available}</p>
-            </div>
-
-            <div className="carpoolbtn">
-                <button onClick={()=>{navigate(`/Carpoolvisitprofile?freelancerId=${id}`)}}
-                   className="primary-btn">Visit Profile</button>
-            </div>
+      <div className="carpoolrow">
+        <div className="carpoolavailabe">
+          <p className="available">{available}</p>
         </div>
-      
+
+        <div className="carpoolbtn">
+          <button onClick={() => { navigate(`/Carpoolvisitprofile?freelancerId=${id}`) }}
+            className="primary-btn">Visit Profile</button>
+        </div>
+      </div>
+
     </div>
   );
 }

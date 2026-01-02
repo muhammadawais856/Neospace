@@ -24,12 +24,11 @@
   align-items: center;
   justify-content: center;
   width: 40px;
-  height: 95px;
+  height: 40px;
   color: var(--text_color);
   transition: all 0.3s ease;
-  margin-bottom: 15px;
-  margin-right: 40px;
-  vertical-align:  last-baseline;         /* prevent arrow from shrinking */
+  margin-right: 0px;
+  flex-shrink: 0;  /* prevent arrow from shrinking */
 }
 .visitexternal{
     display: flex;
@@ -71,13 +70,13 @@
 }
 
 .visitname {
-  font-size: 18px;
+  font-size: var(--font-size-h4);
   font-weight: 600;
   margin: 0;
 }
 
 .visitcompany {
-  font-size: 14px;
+  font-size: var(--font-size-small);
   color: #666;
   margin: 0;
 }
@@ -90,7 +89,7 @@
 }
 
 .visitrate {
-  font-size: 18px;
+  font-size: var(--font-size-h4);
   font-weight: 600;
   margin: 0;
 }
@@ -154,6 +153,12 @@
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s, box-shadow 0.3s;
+}
+
+@media(max-width: 700px) {
+  .visitcardmaincarpool {
+    height: 100px;
+  }
 }
 
 .visitcardmain:hover {
@@ -280,7 +285,7 @@
 .chatinput {
   width: 100%;
   padding: 12px;
-  font-size: 15px;
+  font-size: var(--font-size-small);
   border: var(--border);
   border-radius: 8px;
   background-color: var(--bg-color);
@@ -324,7 +329,7 @@
     border-radius: 15px;
     max-width: 70%;
     margin: 0;
-    font-size: 14px;
+    font-size: var(--font-size-small);
     word-wrap: break-word;
 }
 
@@ -351,7 +356,7 @@
     margin: 0;
     border-radius: 15px;
     max-width: 70%;
-    font-size: 14px;
+    font-size: var(--font-size-small);
 }
 
 .sender-text .time{
@@ -359,7 +364,7 @@
 }
 
 .time {
-    font-size: 12px;
+    font-size: var(--font-size-xs);
     color: #777;
     margin-top: 4px;
     align-self: flex-end;
@@ -384,9 +389,14 @@
 
   .visitarrow {
     display: flex !important;
-    width: 35px;
-    height: 35px;
-    margin: 0 0 10px 0;   /* top → arrow → spacing */
+    width: 24px;
+    height: 24px;
+    margin: 0 6px 0 0;   /* reduced margins */
+  }
+ 
+  .visitarrow svg{
+    height: 16px !important;
+    width: 16px !important;
   }
 
   /* Entire layout becomes vertical */
@@ -402,11 +412,11 @@
 }
 
 .carpoolvisitcarddetailsdark_carpool {
-  font-size: 2rem !important;}
+  font-size: 2.3rem !important;}
 
   .visitcarddetails_carpool {
     font-size: 3rem !important;
-      top: 70px !important;
+      top: 40px !important;
   }
 
 
@@ -420,15 +430,15 @@
   }
 
   .visitname {
-    font-size: 14px;
+    font-size: var(--font-size-small);
   }
 
   .visitcompany {
-    font-size: 11px;
+    font-size: var(--font-size-xs);
   }
 
   .visitrate {
-    font-size: 14px;
+    font-size: var(--font-size-small);
   }
 
   /* Cards resize */
@@ -474,7 +484,7 @@
 }
 
 .available h3{
-  font-size: 23px;
+  font-size: var(--font-size-h3);
   color: var(--color2);
   margin: 0px;
 }
@@ -537,7 +547,7 @@
 @media (max-width: 600px) {
   .Carpoolvisitcards h3,
   .Carpoolvisitcards p {
-    font-size: 15px;
+    font-size: var(--font-size-small);
   }
 }
 

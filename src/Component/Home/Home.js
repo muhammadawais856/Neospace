@@ -1,14 +1,49 @@
 import Avatar from "./Avatar";
 import Card from "./Card";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { homeApi } from "../../services/homeApi";
 import "../../Styles/Home/inner1.css"
 import "../../Styles/Home/inner2.css"
 import "../../Styles/Home/outer.css"
 import "../../Styles/Home/Card.css"
 import logo from "../../assets/stars.png"
-import { useNavigate } from "react-router-dom";
 
 function Home(){
-     const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState({
+        name: "User",
+        email: "",
+        credits: 0,
+        img: ""
+    });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchHomeData();
+    }, []);
+
+    async function fetchHomeData() {
+        try {
+            setLoading(true);
+            const data = await homeApi.getHomeData();
+            if (data && data.user) {
+                setUserData(data.user);
+                // Store user data in localStorage
+                localStorage.setItem('userData', JSON.stringify(data.user));
+            }
+        } catch (err) {
+            console.error("Error fetching home data:", err);
+            // Try to get from localStorage if API fails
+            const storedData = localStorage.getItem('userData');
+            if (storedData) {
+                setUserData(JSON.parse(storedData));
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return(
         
     <>
@@ -18,22 +53,17 @@ function Home(){
         <div className="left">
            
             <div onClick={() => {navigate('/profile')}}>
-                <Avatar />
+                <Avatar imageUrl={userData.img} />
             </div> 
 
             <div className="para" 
             onClick={() => {navigate('/profile')}}>
-                <h3 className="name">Awais Lateef</h3>
-                <p className="company">Neosyss</p>
+                <h3 className="name">{loading ? "Loading..." : userData.name}</h3>
+                <p className="company">{userData.email}</p>
             </div>
         </div>
 
-        <div className="right">
-            <img src={logo} className="logo2" alt="logo" />
-            <div className="para2">
-                <p>4 credits</p>
-            </div>
-        </div>
+        
     </div>
    
 

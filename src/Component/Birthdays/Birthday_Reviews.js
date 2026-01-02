@@ -1,26 +1,98 @@
 import { FaStar } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { birthdaysApi } from "../../services/birthdaysApi";
 import "../../Styles/Birthdays/Birthday_Reviews.css";
 
-// Sample reviews data
-const reviewsData = Array.from({ length: 10 }, (_, i) => ({
-  username: `User ${i + 1}`,
-  rating: i % 5 === 0 ? 5 : i % 4 === 0 ? 4 : 3,
-  comment:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.",
-}));
-
 function BirthdayReviews() {
+  const [searchParams] = useSearchParams();
+  const freelancerId = searchParams.get("freelancerId");
+  const [reviewsData, setReviewsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [totalReview, setTotalReview] = useState(0);
+  const [numbersOfReviews, setNumbersOfReviews] = useState(0);
+
+  useEffect(() => {
+    if (freelancerId) {
+      fetchReviews();
+    } else {
+      // Try to get from URL params as providerId (in case it's passed as providerId)
+      const providerId = searchParams.get("providerId");
+      if (providerId) {
+        fetchReviewsForProvider(providerId);
+      } else {
+        setError("Freelancer ID is required");
+        setLoading(false);
+      }
+    }
+  }, [freelancerId, searchParams]);
+
+  async function fetchReviewsForProvider(providerId) {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await birthdaysApi.getBirthdayReviews(providerId);
+      setReviewsData(data.reviews || []);
+      setTotalReview(data.total_review || 0);
+      setNumbersOfReviews(data.numbers_of_reviews || 0);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setError("Failed to load reviews. Please try again later.");
+      setReviewsData([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function fetchReviews() {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await birthdaysApi.getBirthdayReviews(freelancerId);
+      setReviewsData(data.reviews || []);
+      setTotalReview(data.total_review || 0);
+      setNumbersOfReviews(data.numbers_of_reviews || 0);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setError("Failed to load reviews. Please try again later.");
+      setReviewsData([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   // Calculate dynamic average rating
-  const avgRating = Math.round(
-    reviewsData.reduce((sum, r) => sum + r.rating, 0) / reviewsData.length
-  );
+  const avgRating = totalReview > 0 ? Math.round(totalReview) : 0;
 
   // For rating bars, find max count for proportional bars
   const ratingCounts = [5, 4, 3, 2, 1].map(
     (num) => reviewsData.filter((r) => r.rating === num).length
   );
-  const maxCount = Math.max(...ratingCounts);
+  const maxCount = Math.max(...ratingCounts, 1);
+
+  if (loading) {
+    return (
+      <div className="birthday_reviews_main">
+        <div className="birthday_reviews_back" onClick={() => window.history.back()}>
+          <FaArrowLeft />
+        </div>
+        <div style={{ padding: '20px', textAlign: 'center' }}>Loading reviews...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="birthday_reviews_main">
+        <div className="birthday_reviews_back" onClick={() => window.history.back()}>
+          <FaArrowLeft />
+        </div>
+        <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="birthday_reviews_main">
@@ -44,7 +116,7 @@ function BirthdayReviews() {
               />
             ))}
           </div>
-          <p>Based on {reviewsData.length} Reviews</p>
+          <p>Based on {numbersOfReviews} Reviews</p>
         </div>
 
         <div className="summary_right">
@@ -80,7 +152,7 @@ function BirthdayReviews() {
               ))}
             </div>
 
-            <p className="review_card_comment">{review.comment}</p>
+            <p className="review_card_comment">{review.comments}</p>
           </div>
         ))}
       </div>

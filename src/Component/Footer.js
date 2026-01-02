@@ -1,8 +1,9 @@
 function Footer(){
+    const year = new Date().getFullYear();
     return(
         <>
         <div className="footer">
-            <h3>© 2025 NeoSpace. All rights reserved.</h3>
+            <h3>© {year} NeoSpace. All rights reserved.</h3>
         </div>
         </>
     )

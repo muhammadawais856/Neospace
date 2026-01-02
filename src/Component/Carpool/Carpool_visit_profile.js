@@ -1,5 +1,6 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import "../../Styles/Birthdays/visit_profile.css";
+import "../../Styles/Birthdays/Birthday_Reviews.css";
 import logo from "../../assets/user.png";
 import { FaStar } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
@@ -9,59 +10,134 @@ import { MdChair } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaDollarSign } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
-const carpooldata = [
-  {
-    id: 1,
-    service: "Seats Available",
-    details: "3"
-  },
-  {
-    id: 2,
-    service: "Price",
-    details: "10"
-  },
-  {
-    id: 3,
-    service: "Location",
-    details: "G-9 Islamabad"
-  }
-];
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { carpoolApi } from "../../services/carpoolApi";
+import { reviewsApi } from "../../services/reviewsApi";
 
 function Carpoolvisitprofile() {
-  const rating = 4;
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const freelancerId = searchParams.get("freelancerId");
+  const [profileData, setProfileData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [reviewsData, setReviewsData] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [totalReview, setTotalReview] = useState(0);
+  const [numbersOfReviews, setNumbersOfReviews] = useState(0);
+
+  useEffect(() => {
+    if (freelancerId) {
+      fetchProfile();
+      fetchReviews();
+    } else {
+      setError("Freelancer ID not provided");
+      setLoading(false);
+    }
+  }, [freelancerId]);
+
+  async function fetchProfile() {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await carpoolApi.getProfile(freelancerId);
+      setProfileData(data);
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      setError("Failed to load profile. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function fetchReviews() {
+    try {
+      setReviewsLoading(true);
+      const data = await reviewsApi.getReviews(freelancerId, 'carpool');
+      setReviewsData(data.reviews || []);
+      setTotalReview(data.average_rating || 0);
+      setNumbersOfReviews(data.total_reviews || 0);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+      setReviewsData([]);
+    } finally {
+      setReviewsLoading(false);
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="visitmain">
+        <div className="visitarrow" onClick={() => navigate("/carpool")}>
+          <FaArrowLeft />
+        </div>
+        <div className="visitexternal">
+          <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !profileData) {
+    return (
+      <div className="visitmain">
+        <div className="visitarrow" onClick={() => navigate("/carpool")}>
+          <FaArrowLeft />
+        </div>
+        <div className="visitexternal">
+          <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
+            {error || "Profile not found"}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const carpooldata = [
+    {
+      id: 1,
+      service: "Seats Available",
+      details: profileData.seats_available?.toString() || "0"
+    },
+    {
+      id: 2,
+      service: "Price",
+      details: profileData.price?.toString() || "0"
+    },
+    {
+      id: 3,
+      service: "Location",
+      details: profileData.location || "N/A"
+    }
+  ];
   return (
     <div className="visitmain">
-        <div className="visitarrow" onClick={() =>  navigate("/carpool")}>
-           <FaArrowLeft />
-        </div>
+       
         <div className="visitexternal">
             <div className="visitouter">
                 <div className="visitleft">
-                <img src={logo} className="visituserimg" alt="user" />
+                <div className="visitarrow" onClick={() =>  navigate("/carpool")}>
+           <FaArrowLeft />
+        </div>
+                <img src={profileData.profile_picture || logo} className="visituserimg" alt="user" />
                 <div className="visitnames">
-                        <h3 className="visitname">Awais Lateef</h3>
-                        <p className="visitcompany">G-9, Islamabad</p>
+                        <h3 className="visitname">{profileData.name}</h3>
+                        <p className="visitcompany">{profileData.location}</p>
                     </div>
                 </div>
 
                 <div className="car2">
-                    <FaCar className="vehicleIcon2"></FaCar>
+                    {profileData.vehicle_type === "car" ? (
+                        <FaCar className="vehicleIcon2"></FaCar>
+                    ) : (
+                        <RiMotorbikeFill className="vehicleIcon2"></RiMotorbikeFill>
+                    )}
                 </div>
             </div>
 
             <div className="visitdescription">
-                <p >
-                    Share your daily commute with reliable and friendly drivers! 
-                    We offer safe and convenient carpool rides tailored to your schedule and location. 
-                    Whether you’re heading to work, school, or running errands, enjoy comfortable rides 
-                    while saving time and money. Our professional drivers ensure punctual pickups, 
-                    clean vehicles, and a smooth journey. Perfect for solo commuters or small groups, 
-                    we make traveling together easy, affordable, and eco-friendly. 
-                    Hop in and make your ride a pleasant experience!
-                </p>
+                <p>{profileData.description}</p>
             </div>
 
             <div className="Carpoolvisitcards">
@@ -74,11 +150,79 @@ function Carpoolvisitprofile() {
             </div>
 
             <div className="chatwith"> 
-                <h3 className="chatwithdriver">Chat with Awais Lateef</h3>
+                <h3 className="chatwithdriver">Chat with {profileData.name}</h3>
              </div>
 
             <div className="chatsection">
                 <Chatcard isBlur={false}/>    
+            </div>
+
+            {/* Reviews Section */}
+            <div style={{ marginTop: '40px' }}>
+                {/* ===== SUMMARY SECTION ===== */}
+                <div className="reviews_summary">
+                    <div className="summary_left">
+                        <h1>{totalReview > 0 ? Math.round(totalReview) : 0}</h1>
+                        <div className="summary_stars">
+                            {[...Array(5)].map((_, i) => (
+                                <FaStar
+                                    key={i}
+                                    className={i < Math.round(totalReview) ? "goldStar" : "grayStar"}
+                                />
+                            ))}
+                        </div>
+                        <p>Based on {numbersOfReviews} Reviews</p>
+                    </div>
+
+                    <div className="summary_right">
+                        {(() => {
+                            const ratingCounts = [5, 4, 3, 2, 1].map(
+                                (num) => reviewsData.filter((r) => r.rating === num).length
+                            );
+                            const maxCount = Math.max(...ratingCounts, 1);
+                            return [5, 4, 3, 2, 1].map((num, idx) => (
+                                <div className="rating_bar_row" key={num}>
+                                    <span>{num}</span>
+                                    <div className="rating_bar">
+                                        <div
+                                            className="rating_fill"
+                                            style={{
+                                                width: `${(ratingCounts[idx] / maxCount) * 100}%`,
+                                            }}
+                                        />
+                                    </div>
+                                    <span>{ratingCounts[idx]}</span>
+                                </div>
+                            ));
+                        })()}
+                    </div>
+                </div>
+
+                {reviewsLoading ? (
+                    <div style={{ padding: '20px', textAlign: 'center' }}>Loading reviews...</div>
+                ) : reviewsData.length === 0 ? (
+                    <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>No reviews yet</div>
+                ) : (
+                    /* ===== REVIEW CARDS ===== */
+                    <div className="reviews_grid">
+                        {reviewsData.map((review, index) => (
+                            <div className="review_card_main" key={index}>
+                                <p className="review_username">{review.username || review.name}</p>
+
+                                <div className="review_card_rating">
+                                    {[...Array(5)].map((_, i) => (
+                                        <FaStar
+                                            key={i}
+                                            className={i < review.rating ? "goldStar" : "grayStar"}
+                                        />
+                                    ))}
+                                </div>
+
+                                <p className="review_card_comment">{review.comment || review.comments}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     </div>

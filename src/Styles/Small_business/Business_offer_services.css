@@ -16,7 +16,7 @@ position: absolute;
   left: 20px;      /* same horizontal place */
   width: 40px;
   height: 40px;
-  font-size: 24px;
+  font-size: var(--font-size-icon);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -31,13 +31,13 @@ position: absolute;
 }
 
 .business_offer_title_name {
-  font-size: 32px;
+  font-size: var(--font-size-h1);
   font-weight: bold;
   margin: 0;
 }
 
 .business_offer_desc {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   color: #666;
   margin-top: 5px;
 }
@@ -81,7 +81,7 @@ position: absolute;
 }
 
 .business_offer_info_text {
-  font-size: 22px;
+  font-size: var(--font-size-h4);
   font-weight: bold;
   margin: 0;
 }
@@ -118,10 +118,10 @@ position: absolute;
 
 @media (max-width: 768px) {
   .business_offfer_arrow {
-    font-size: 25px;
+    font-size: var(--font-size-h2);
   }
   .business_offer_title_name {
-    font-size: 26px;
+    font-size: var(--font-size-h2);
   }
 }
 
@@ -158,7 +158,7 @@ position: absolute;
   }
 
   .business_offer_title_name {
-    font-size: 22px; /* optional smaller title */
+    font-size: var(--font-size-h4); /* optional smaller title */
   }
 
   .business_offer_title{

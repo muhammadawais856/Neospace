@@ -1,16 +1,14 @@
 
-/* Wrap arrow and heading in a flex container */
+/* Arrow inside businessleft container */
 .arrow_smallbusiness {
-  position: absolute;
-  top: 26px;       /* adjust this number to move arrow downward */
-  left: 20px;      /* same horizontal place */
   width: 40px;
   height: 40px;
-  font-size: 24px;
+  font-size: var(--font-size-icon);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right:10px;
   color: var(--text_color);
   transition: all 0.3s ease;
 }
@@ -37,6 +35,7 @@
 
 .businessouter {
   box-sizing: border-box;
+  width: 100%; /* Ensure outer container takes full width */
 }
 
 .businesstop {
@@ -48,20 +47,26 @@
 
 .businessleft {
   display: flex;
-  flex-direction: column;   /* arrange in vertical rows */
-  align-items: flex-start;  /* keep everything left aligned */
-  gap: 2px;                 /* small space between h3 and p */
+  flex-direction: row;   /* arrange in horizontal row */
+  align-items: center;   /* center arrow with heading+description block */
+}
+
+.business_left_in {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
 }
 
 .businessleft h3 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: var(--font-size-h3);
 }
 
 .businessleft p {
   margin: 0;
   color: var(--desc_color);
-  font-size: 1rem;
+  font-size: var(--font-size-body);
 }
 
 .page-btn {
@@ -72,7 +77,6 @@
   color: #333;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 500;
   transition: all 0.25s ease-in-out;
   border: none;
@@ -108,11 +112,18 @@
 
 
 
-.businesstype p{
+/* Scoped to businessmain cards - keep global version for other uses if needed */
+.businessmain .businesscard .businesstype p{
   padding : 0px;
   margin: 0px;
   /* margin-top: 10px; */
   
+}
+
+/* Keep global version for compatibility if used elsewhere */
+.businesstype p{
+  padding : 0px;
+  margin: 0px;
 }
 
 .car{
@@ -125,24 +136,27 @@
   width: 20px;
 }
 
-.businessrow {
+/* Scoped to businessmain cards to avoid conflicts */
+.businessmain .businesscard .businessrow {
   display: flex;               /* make it a row */
   justify-content: space-between; /* space between the two items */
-  align-items: center;         /* vertically center items */            /* optional spacing from above content */
+  align-items: center;         /* vertically center items */
   gap: 10px;    
-  margin-top: 20px;               /* optional gap between items on small screens */
+  margin-top: auto; /* Push to bottom */
+  padding-top: 15px; /* Space above rating/button */
+  flex-shrink: 0; /* Don't shrink this section */
 }
 
 .businessavailabe .available {
-  font-size: 18px;
+  font-size: var(--font-size-h4);
   font-weight: 500;
   color: var(--color1);
   margin: 0px;
 }
 
-.businessbtn .primary-btn {
+/* Scoped to businessmain cards */
+.businessmain .businesscard .businessbtn .primary-btn {
   padding: 6px 12px;           /* adjust button size */
-  font-size: 14px;
   cursor: pointer;
 }
 
@@ -156,7 +170,8 @@
 */
 
 
-.businesscard {
+/* Scoped card styles to avoid affecting other components */
+.businessmain .businesscard {
   background: var(--card_gradient);      /* card background */
   border-radius: 15px;              /* rounded corners */
   box-shadow: var(--box_shadow);
@@ -164,28 +179,37 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease;
+  flex-shrink: 0; /* Prevent cards from shrinking */
+  flex-grow: 0; /* Prevent cards from growing */
+  min-height: 450px; /* Fixed minimum height for consistency */
+  height: 100%;
 }
 
-.businesscard:hover {
+.businessmain .businesscard:hover {
   transform: translateY(-5px);
   box-shadow: var(--box_shadow);
 }
 
-.businesscardbottom{
-
-  padding: 30px;
+.businessmain .businesscardbottom{
+  padding: 25px;
   margin-bottom: 0px !important;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Grow to fill available space */
+  justify-content: space-between; /* Push rating/button to bottom */
 }
 
 .goldStar{
-  color: rgb(255, 187, 0);
+  color: var(--star-color);
+  filter: drop-shadow(0 0 2px rgba(0, 215, 253, 0.3));
 }
 
 .grayStar{
   color: rgb(168, 168, 168);
 }
 
-.businessbottom {
+/* Scoped to businessmain to avoid affecting other components */
+.businessmain .businessbottom {
   display: flex;
   flex-wrap: wrap;
   margin: -10px;
@@ -193,22 +217,24 @@
   margin-top: 15px;
 }
 
-/* ✅ This makes 3 cards per row */
-.businessbottom > * {
-  width: calc(33.333% - 20px) !important; /* 3 in a row */
+/* ✅ Desktop: 3 cards per row - consistent width */
+.businessmain .businessbottom > * {
+  flex: 0 0 calc(33.333% - 20px); /* Fixed width, no grow/shrink */
+  width: calc(33.333% - 20px); /* 3 in a row */
   margin: 10px;
   box-sizing: border-box;
 }
 
-
-/* Each card styling */
-.businesscard {
-  width: calc(50% - 20px);
+/* Each card styling - scoped */
+.businessmain .businesscard {
+  flex: 0 0 calc(33.333% - 20px); /* Fixed width for desktop */
+  width: calc(33.333% - 20px);
   margin: 10px;
   box-sizing: border-box;
 }
 
-.userimg {
+/* Scoped to businessmain cards */
+.businessmain .businesscard .userimg {
   margin-top: 2px;
   width: 50px;
   height: 50px;
@@ -216,77 +242,95 @@
   object-fit: cover;
 }
 
-/* Section 1: profile, name/rating, featured button */
-.businesssec1 {
+/* Section 1: profile, name/rating, featured button - scoped to businessmain cards */
+.businessmain .businesscard .businesssec1 {
   display: flex;
   align-items: start !important;             /* vertical alignment */
   justify-content: space-between;  /* left = profile+name, right = featured */
   gap: 15px;
 }
 
-/* Left: profile + name + rating */
-.nameetc {
+/* Left: profile + name + rating - scoped */
+.businessmain .businesscard .nameetc {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Profile image container */
-.profileimg {
+/* Profile image container - scoped */
+.businessmain .businesscard .profileimg {
   flex-shrink: 0; /* prevent shrinking */
 }
 
-/* Name and stars stacked */
-.profilename {
+/* Name and stars stacked - scoped */
+.businessmain .businesscard .profilename {
   display: flex;
   flex-direction: column;  /* name on top, rating below */
   justify-content: center;
 }
 
-.profilename h3 {
+.businessmain .businesscard .profilename h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: var(--font-size-h4);  /* Smaller for desktop */
   font-weight: 600;
 }
 
-.rating {
-  display: flex;
-  gap: 3px;
-  margin-top: 5px;
+/* Increase for mobile - scoped */
+@media (max-width: 850px) {
+  .businessmain .businesscard .profilename h3 {
+  }
 }
 
-/* Featured button on the right */
-.featured {
+.businessmain .businesscard .rating {
+  display: flex;
+  gap: 3px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Featured button on the right - scoped */
+.businessmain .businesscard .featured {
   color: #0571ff;              /* dark golden */
   flex-shrink: 0; /* prevent shrinking */
-  font-size: 16px;
+  font-size: var(--font-size-body);
   font-weight: 600;
   display: flex;
   padding: 0;
   gap: 5px;
 }
 
-/* Description section */
-.businesssec2 {
+/* Description section - scoped */
+.businessmain .businesscard .businesssec2 {
   margin-top: 10px;
+  flex: 1; /* Grow to push rating/button to bottom */
+  display: flex;
+  align-items: start;
+  flex-direction: column;
 }
 
-.description {
+.businessmain .businesscard .description {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: var(--font-size-body);
+  line-height: 1.5;
   color: #333;
+  flex: 1;
 }
 
-/* Reviews / Contact buttons section */
-.businesssec3 {
+/* Reviews / Contact buttons section - scoped */
+.businessmain .businesscard .businesssec3 {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   margin-top: 15px;
 }
 
-.businessimageurl {
+/* Rating and button row - scoped */
+.businessmain .businesscard .businessrow {
+  margin-top: auto; /* Push to bottom */
+  padding-top: 15px; /* Space above rating/button */
+}
+
+.businessmain .businesscard .businessimageurl {
   width: 100%;
   height: 250px;
   overflow: hidden;
@@ -294,7 +338,7 @@
   border-top-right-radius: 12px;
 }
 
-.businessimageurl img {
+.businessmain .businesscard .businessimageurl img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -310,7 +354,7 @@
 .business_filter p{
   margin: 0;
     color: var(--desc_color);
-    font-size: 1rem;
+    font-size: var(--font-size-body);
 
 }
 
@@ -319,7 +363,6 @@
   padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 14px;
   outline: none;
   cursor: pointer;
   background-color: #fff;
@@ -337,52 +380,75 @@
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
 }
 
+/* Medium screens: 2 cards per row */
 @media (max-width: 1000px) {
-  .businessbottom > * {
-    width: calc(50% - 20px) !important;  /* 2 cards per row */
+  .businessmain .businessbottom > * {
+    flex: 0 0 calc(50% - 20px) !important;  /* 2 cards per row */
+    width: calc(50% - 20px) !important;
+    max-width: calc(50% - 20px) !important;
+    min-width: calc(50% - 20px) !important;
     margin: 10px;
+  }
+  
+  .businessmain .businesscard {
+    flex: 0 0 calc(50% - 20px) !important;
+    width: calc(50% - 20px) !important;
+    max-width: calc(50% - 20px) !important;
+    min-width: calc(50% - 20px) !important;
+    min-height: 440px; /* Consistent height for 2-card layout */
+  }
+
+  .businessmain .businesscardbottom {
+    padding: 22px; /* Slightly less padding for medium screens */
   }
 }
 
 
 /* Responsive for mobile */
 @media (max-width: 850px) {
-  .businesscard {
+  .businessmain .businesscard {
     width: 100%;
+    min-height: 420px; /* Slightly smaller for mobile */
   }
 
-  .businesssec1 {
+  .businessmain .businesscardbottom {
+    padding: 20px; /* Adequate padding for mobile */
+  }
+
+  .businessmain .businesscard .businesssec1 {
     flex-direction: row;      /* keep everything in one line */
     align-items: center;      /* vertical alignment */
     justify-content: space-between; /* left and right sides */
     gap: 10px;
   }
 
-  /* Shrink profile image */
-  .profileimg .userimg {
+  /* Shrink profile image - scoped */
+  .businessmain .businesscard .profileimg .userimg {
     width: 40px;
     height: 40px;
   }
 
-  /* Shrink name text */
-  .profilename h3 {
-    font-size: 14px;
-  }
 
-  /* Shrink rating stars */
-  .rating svg {
+  /* Shrink rating stars and reduce gap - scoped */
+  .businessmain .businesscard .rating {
+    gap: 2px;
+  }
+  
+  .businessmain .businesscard .rating svg {
     width: 14px;
     height: 14px;
   }
 
+  .businessmain .businesscard .description {
+  }
+
   /* Shrink Featured button */
   .featured-btn {
-    font-size: 14px;
     padding: 3px 6px;
   }
 
   .featured-btn .icon {
-    font-size: 16px;
+    font-size: var(--font-size-body);
   }
 }
 
@@ -394,28 +460,38 @@
     align-items: center;
   }
 
-  .businesstop .businessleft p {
-    font-size: 12px;           /* smaller paragraph */
+  .businesstop .businessleft p,
+  .businesstop .business_left_in p {
+    font-size: var(--font-size-xs);           /* smaller paragraph */
   }
 
   .businesstop .businessright .offerservicebtn {
-    padding: 6px 12px;         /* smaller button */
-    font-size: 14px;
   }
 }
 
 @media (max-width: 730px) {
 
-  /* force arrow to show */
+  /* Arrow sizing for small screens */
   .arrow_smallbusiness {
-    display: flex !important;  
-    margin: 0 0 15px 0;
-    width: 35px;
-    height: 35px;
-    margin-left: 0;
-    margin-top: -15px;
-    top: 28px;
-    left: 10px;
+    width: 26px;
+    height: 26px;
+    font-size: var(--font-size-h4);
+    margin-right: 10px;
+  }
+
+  .arrow_smallbusiness svg {
+    height: 18px !important;
+    width: 18px !important;
+  }
+
+  .businessright{
+    top: 20px;
+    right: 20px;
+  }
+
+  .businessleft {
+    flex: 1;
+    min-width: 0;
   }
 
   /* make row break */
@@ -424,80 +500,83 @@
     padding: 15px;
   }
 
-  /* business text padding — move rightward */
-  .businesstop {
-    padding-left: 50px; /* adjust this value as needed */
-    padding-right: 15px;
-  }
-}
 
-/* For screens 620px and smaller */
-/* For screens 620px and smaller */
-@media (max-width: 620px) {
-  /* 1 card per row */
-  .businessbottom > * {
-    width: 100% !important;           /* full width */
+/* Small screens: 1 card per row */
+@media (max-width: 768px) {
+  /* 1 card per row - scoped */
+  .businessmain .businessbottom > * {
+    flex: 0 0 100% !important;           /* full width */
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
     margin: 10px 0;
   }
-  .businessbottom{
-    padding: 10px;
+  .businesssec2 .description{
+    font-size: 13px;
+  }
+  .businessmain .businessbottom {
+    padding: 15px; /* Adequate padding for small screens */
+    margin: -15px;
   }
 
-  /* Keep fixed card height */
-  .businesscard {
-    height: 350px;         /* fixed height */
+  /* Fixed card height - scoped */
+  .businessmain .businesscard {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    min-height: 400px; /* Fixed minimum height */
+    height: auto;
   }
 
-  .businessimageurl {
-    height: 50%;            /* image takes half card height */
+  .businessmain .businesscard .businessimageurl {
+    height: 180px; /* Fixed image height */
+    min-height: 180px;
   }
 
-  .businessimageurl img {
+  .businessmain .businesscard .businessimageurl img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  /* Card content (bottom) */
-  .businesscardbottom {
-    padding: 10px;         /* smaller padding */
-    height: 50%;           /* bottom half */
+  /* Card content (bottom) - scoped */
+  .businessmain .businesscardbottom {
+    padding: 20px !important; /* Adequate padding, not too small */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* distribute content */
+    flex: 1;
+    justify-content: space-between; /* Push rating/button to bottom */
   }
 
-  /* Text size adjustments */
-  .businessleft h3,
-  .profilename h3 {
-    font-size: 14px;       /* smaller heading */
+  /* Text size adjustments - readable sizes */
+  .businessmain .businessleft h3,
+  .businessmain .businesscard .profilename h3 {
+    font-size: var(--font-size-h3);       /* Readable heading size */
   }
 
-  .businessleft p,
-  .businesstype p,
-  .description {
-    font-size: 12px;       /* smaller text */
+  .businessmain .businessleft p,
+  .businessmain .businesscard .businesstype p {
   }
 
-  /* Stars size */
-  .rating svg {
-    width: 12px;
-    height: 12px;
+  .businessmain .businesscard .description {
+    line-height: 1.5;
   }
 
-  /* Buttons smaller */
-  .businessbtn .primary-btn,
-  .businessright .primary-btn2 {
-    padding: 4px 10px;
-    font-size: 12px;
+  /* Stars size - readable */
+  .businessmain .businesscard .rating svg {
+    width: 14px;
+    height: 14px;
   }
 
-  
+  /* Buttons - readable sizes - scoped */
+  .businessmain .businesscard .businessbtn .primary-btn,
+  .businessmain .businessright .primary-btn2 {
+    padding: 8px 14px; /* Adequate button padding */
+  }
 
   /* Header spacing */
-  .businesstop {
-    padding-left: 40px;
-    padding-right: 0px;   /* shift text slightly right of arrow */
+  .businessmain .businesstop {
   }
 }
 
@@ -516,45 +595,49 @@
 
 }
 
-
-  /* Arrow smaller and on top */
+  /* Arrow smaller */
   .arrow_smallbusiness {
-    width: 25px;
-    height: 25px;
-    font-size: 22px;
-    margin-bottom: 10px;  /* space below arrow */
-    margin-left: 0;
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-icon);
+    margin-bottom: 0;
     margin-top: 0;
-    top: 20px;
-    left: 14px;
-    
-  }
-   .offerservicebtn {
-    
-    margin-top: -35px; /* adjust this value to align with arrow */
-    align-self: flex-start; /* keep it aligned with left content if needed */
-    padding: 4px 10px;
-    font-size: 12px;
   }
 
-  /* Title/subtitle below arrow */
+  .arrow_smallbusiness svg {
+    height: 16px !important;
+    width: 16px !important;
+  }
+
+   .businessmain .businessright .primary-btn2 {
+    padding: 8px 10px!important;
+  }
+
+  /* Title/subtitle layout */
   .businesstop {
-    padding-top: 60px;
+    padding-top: 10px;
     display: flex;
-    flex-direction: row; /* vertical stack */
-    align-items: flex-start; /* left align */
-    padding-left: 0;        /* remove extra padding */
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: nowrap;
+    padding-left: 0;
+  }
+
+
+  .business_left_in h3 {
+    font-size: var(--font-size-h4);
   }
 
   .businessleft h3 {
-    font-size: 20px;       /* smaller heading */
+    font-size: var(--font-size-h4);       /* smaller heading */
     margin: 0;
   }
 
   .businessleft p {
-    font-size: 12px;       /* smaller subtitle */
+    font-size: var(--font-size-xs);       /* smaller subtitle */
     margin: 0;
     color: #666;
   }
-}
-
+}}
