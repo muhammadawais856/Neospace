@@ -42,6 +42,7 @@ body {
     --card_text_new: #005F60;
     --border: 1px solid #ccc;
     --card_gradient: linear-gradient(to bottom right, #eff3f3, #edf1f1);
+    --divider-color: #bbb7b7;
 
     /* Star Rating Colors */
     --star-color: #07c2c5;
@@ -83,6 +84,9 @@ body {
     --card_text_new: #d4d0d0c3;
     --border: 1px solid #333;
    --card_gradient: linear-gradient(to top right, #282d2d, #161d1e);
+    --divider-color: #c2bdbd;
+
+    
 }
 
 /* Mobile Font Sizes - Smaller relative sizes */
