@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../../contexts/AuthContext";
 import "../../Styles/Auth/signup.css";
 
 function SignUp() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [step, setStep] = useState("signup"); // "signup" or "otp"
   const [otpValues, setOtpValues] = useState(["", "", "", "", "", ""]);
   const inputsRef = useRef([]);
@@ -28,6 +30,8 @@ function SignUp() {
   // Handle signup form submission
   const onSubmit = (data) => {
     console.log("SignUp data:", data);
+    // Store form data for OTP verification
+    sessionStorage.setItem('signupFormData', JSON.stringify(data));
     toast.success("Account created successfully! Enter OTP sent to your email.");
     setStep("otp");
   };
@@ -71,7 +75,7 @@ function SignUp() {
   };
 
   // Handle OTP submission
-  const handleOtpSubmit = (e) => {
+  const handleOtpSubmit = async (e) => {
     e.preventDefault();
     if (otpValues.some((val) => val === "")) {
       showError("Please enter all 6 digits of OTP");
@@ -80,8 +84,36 @@ function SignUp() {
 
     const enteredOtp = otpValues.join("");
     if (enteredOtp === "123456") { // replace with real OTP logic
-      toast.success("OTP verified successfully!");
-      navigate("/login");
+      try {
+        // TODO: Replace with actual API call
+        // For now, simulate successful signup
+        const formData = JSON.parse(sessionStorage.getItem('signupFormData') || '{}');
+        
+        // Mock token and user data - replace with actual API response
+        const mockToken = "mock_token_" + Date.now();
+        const mockUser = {
+          name: formData.fullName || "User",
+          email: formData.email || "",
+          credits: 0,
+          img: ""
+        };
+        
+        login(mockToken, mockUser);
+        sessionStorage.removeItem('signupFormData');
+        
+        toast.success("Account created successfully!");
+        
+        // Check for redirect path
+        const redirectPath = sessionStorage.getItem('signupRedirect');
+        if (redirectPath) {
+          sessionStorage.removeItem('signupRedirect');
+          navigate(redirectPath);
+        } else {
+          navigate('/');
+        }
+      } catch (error) {
+        showError("Signup failed. Please try again.");
+      }
     } else {
       showError("Invalid OTP, please try again");
     }

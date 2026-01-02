@@ -3,6 +3,7 @@ import Card from "./Card";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { homeApi } from "../../services/homeApi";
+import { useAuth } from "../../contexts/AuthContext";
 import "../../Styles/Home/inner1.css"
 import "../../Styles/Home/inner2.css"
 import "../../Styles/Home/outer.css"
@@ -11,6 +12,7 @@ import logo from "../../assets/stars.png"
 
 function Home(){
     const navigate = useNavigate();
+    const { isAuthenticated, user: authUser } = useAuth();
     const [userData, setUserData] = useState({
         name: "User",
         email: "",
@@ -20,8 +22,20 @@ function Home(){
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchHomeData();
-    }, []);
+        if (isAuthenticated && authUser) {
+            // Use authenticated user data
+            setUserData({
+                name: authUser.name || authUser.full_name || "User",
+                email: authUser.email || "",
+                credits: authUser.credits || 0,
+                img: authUser.img || authUser.profile_image || ""
+            });
+            setLoading(false);
+        } else {
+            // Try to fetch from API or localStorage
+            fetchHomeData();
+        }
+    }, [isAuthenticated, authUser]);
 
     async function fetchHomeData() {
         try {
@@ -49,6 +63,7 @@ function Home(){
     <>
 <div className="outer">
 
+    {isAuthenticated && (
     <div className="inner1">
         <div className="left">
            
@@ -65,6 +80,7 @@ function Home(){
 
         
     </div>
+    )}
    
 
     <div className="inner2"> 

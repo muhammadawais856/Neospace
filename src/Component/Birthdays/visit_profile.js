@@ -1,3 +1,4 @@
+import React from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import "../../Styles/Birthdays/visit_profile.css";
 import "../../Styles/Birthdays/Birthday_Reviews.css";
@@ -8,10 +9,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { birthdaysApi } from "../../services/birthdaysApi";
 import { reviewsApi } from "../../services/reviewsApi";
+import { useAuth } from "../../contexts/AuthContext";
+import SignupModal from "../Common/SignupModal";
 
 
 function VisitProfile() {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     const [searchParams] = useSearchParams();
     const freelancerId = searchParams.get('freelancerId');
     const [profileData, setProfileData] = useState(null);
@@ -21,6 +25,7 @@ function VisitProfile() {
     const [reviewsLoading, setReviewsLoading] = useState(true);
     const [totalReview, setTotalReview] = useState(0);
     const [numbersOfReviews, setNumbersOfReviews] = useState(0);
+    const [showSignupModal, setShowSignupModal] = useState(false);
 
     useEffect(() => {
         if (freelancerId) {
@@ -134,7 +139,14 @@ function VisitProfile() {
                 </div>
 
                 <div className="visitdescription">
-                    <p>{profileData.description}</p>
+                    <p>
+                        {profileData.description?.split('\n').map((line, index, array) => (
+                            <React.Fragment key={index}>
+                                {line}
+                                {index < array.length - 1 && <br />}
+                            </React.Fragment>
+                        ))}
+                    </p>
                 </div>
 
                 <div className="visitcards">
@@ -161,8 +173,14 @@ function VisitProfile() {
                 </div>
 
                 <div className="chatsection">
-                    <Chatcard isBlur={false}/>    
+                    <Chatcard isBlur={!isAuthenticated} onSignupClick={() => setShowSignupModal(true)}/>    
                 </div>
+
+                <SignupModal 
+                    isOpen={showSignupModal}
+                    onClose={() => setShowSignupModal(false)}
+                    providerName={profileData.name}
+                />
 
                 {/* Reviews Section */}
                 <div style={{ marginTop: '40px' }}>
@@ -249,14 +267,17 @@ function Visitcard({ service, details, onClick }) {
   );
 }
 
-function Chatcard({ isBlur }) {
+function Chatcard({ isBlur, onSignupClick }) {
     const currentTime = getCurrentTime();
 
     return (
         <>
             {isBlur ? (
-                <div className="chatcardmain blurdiv">
-                    You need credits to chat with this service provider.
+                <div className="chatcardmain blurdiv" onClick={onSignupClick} style={{ cursor: 'pointer' }}>
+                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                        <p style={{ marginBottom: '10px', fontSize: '18px', fontWeight: '600' }}>Login or Sign up to chat</p>
+                        <p style={{ fontSize: '14px', color: '#666' }}>Click here to login or sign up and start chatting</p>
+                    </div>
                 </div>
             ) : (
                 <div className="chatcardmain">

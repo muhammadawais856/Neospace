@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/stars.png";
 import logo2 from "../../assets/user2.jpg";
 import { FaRegEdit } from "react-icons/fa";
 import "../../Styles/Profile/Profile.css";
 import { profileApi } from "../../services/profileApi";
+import { useAuth } from "../../contexts/AuthContext";
+import SignupModal from "../Common/SignupModal";
 
 function Profile() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [name, setName] = useState("Muhammad Awais Lateef");
   const [email, setEmail] = useState("awais@gmail.com");
   const [contact, setContact] = useState("+92 123 4567890");
@@ -16,6 +21,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
+  const [showSignupModal, setShowSignupModal] = useState(false);
 
   useEffect(() => {
     fetchProfile();
@@ -75,6 +81,78 @@ function Profile() {
       reader.readAsDataURL(file);
     }
   };
+
+  // Show login/signup message if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="profile_main">
+        <div className="profile_outer">
+          <div style={{ 
+            textAlign: 'center', 
+            padding: '60px 20px',
+            maxWidth: '500px',
+            margin: '0 auto'
+          }}>
+            <h2 style={{ marginBottom: '15px', fontSize: '24px', color: '#333' }}>
+              Login or Sign up Required
+            </h2>
+            <p style={{ 
+              marginBottom: '30px', 
+              fontSize: '16px', 
+              color: '#666',
+              lineHeight: '1.6'
+            }}>
+              Please login or sign up to view and manage your profile.
+            </p>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '12px',
+              maxWidth: '300px',
+              margin: '0 auto'
+            }}>
+              <button 
+                className="primary-btn" 
+                onClick={() => navigate('/signup')}
+                style={{ width: '100%', padding: '12px 24px', fontSize: '16px' }}
+              >
+                Sign Up
+              </button>
+              <button 
+                onClick={() => navigate('/login')}
+                style={{ 
+                  width: '100%', 
+                  padding: '12px 24px', 
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  background: 'transparent',
+                  border: '2px solid var(--color5, #0571ff)',
+                  color: 'var(--color5, #0571ff)',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'var(--color5, #0571ff)';
+                  e.target.style.color = 'white';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'transparent';
+                  e.target.style.color = 'var(--color5, #0571ff)';
+                }}
+              >
+                Log In
+              </button>
+            </div>
+          </div>
+        </div>
+        <SignupModal 
+          isOpen={showSignupModal}
+          onClose={() => setShowSignupModal(false)}
+        />
+      </div>
+    );
+  }
 
   if (loading) {
     return (

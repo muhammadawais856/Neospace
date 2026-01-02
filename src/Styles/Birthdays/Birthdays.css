@@ -220,6 +220,8 @@
 
   .carpoolcard{
     width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
   }
 
   /* Make arrow smaller & aligned correctly */
@@ -364,19 +366,15 @@
   box-shadow: var(--box_shadow);
   padding: 35px;
   width: calc(50% - 20px);          /* two cards per row minus gap */
+  min-width: calc(50% - 20px);       /* prevent shrinking */
+  max-width: calc(50% - 20px);       /* prevent expanding */
+  margin: 10px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 10px;
   transition: transform 0.3s ease;
-  /* fix height */
-  
-}
-
-.carpoolcard {
-  width: calc(50% - 20px);
-  margin: 10px;
-  box-sizing: border-box;
+  flex-shrink: 0;                    /* prevent flex shrinking */
 }
 
 .carpoolcard:hover {

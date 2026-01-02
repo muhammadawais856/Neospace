@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../../contexts/AuthContext";
 import "../../Styles/Auth/login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -14,10 +16,35 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Login data:", data);
-    toast.success("Login Successful!");
-    // navigate('/dashboard');
+  const onSubmit = async (data) => {
+    try {
+      // TODO: Replace with actual API call
+      // For now, simulate login
+      console.log("Login data:", data);
+      
+      // Mock token and user data - replace with actual API response
+      const mockToken = "mock_token_" + Date.now();
+      const mockUser = {
+        name: data.email.split('@')[0],
+        email: data.email,
+        credits: 0,
+        img: ""
+      };
+      
+      login(mockToken, mockUser);
+      toast.success("Login Successful!");
+      
+      // Check for redirect path
+      const redirectPath = sessionStorage.getItem('signupRedirect');
+      if (redirectPath) {
+        sessionStorage.removeItem('signupRedirect');
+        navigate(redirectPath);
+      } else {
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error("Login failed. Please try again.");
+    }
   };
 
   const showError = (message) => {
@@ -87,7 +114,7 @@ function Login() {
             </div>
 
             <div className="login_btn">
-              <button className="primary-btn" type="submit" onClick={() => navigate("/")}>
+              <button className="primary-btn" type="submit">
                 Log In
               </button>
             </div>

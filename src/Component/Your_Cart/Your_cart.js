@@ -5,14 +5,18 @@ import { MdDeleteOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { getCartByStores, getCart, removeFromCart, updateCartItemQuantity, getCartTotal, getCartItemsCount } from "../../utils/cartUtils";
+import { useAuth } from "../../contexts/AuthContext";
+import SignupModal from "../Common/SignupModal";
 import "../../Styles/Your_cart/Your_cart.css"
 
 function Your_cart(){
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     const [stores, setStores] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [showSignupModal, setShowSignupModal] = useState(false);
 
     useEffect(() => {
         loadCartData();
@@ -106,8 +110,14 @@ function Your_cart(){
                             <div className="checkout_btn">
                                 <button 
                                     onClick={() => { 
-                                        // Handle checkout
-                                        alert('Checkout functionality coming soon!');
+                                        if (!isAuthenticated) {
+                                            // Store that user came from cart
+                                            sessionStorage.setItem('signupRedirect', '/yourcart');
+                                            setShowSignupModal(true);
+                                        } else {
+                                            // Handle checkout
+                                            alert('Checkout functionality coming soon!');
+                                        }
                                     }}
                                     className="primary-btn4">
                                     Check Out
@@ -119,6 +129,11 @@ function Your_cart(){
             </div>
 
         </div>
+        <SignupModal 
+            isOpen={showSignupModal}
+            onClose={() => setShowSignupModal(false)}
+            redirectPath="/yourcart"
+        />
         <ToastContainer />
         </>
     );

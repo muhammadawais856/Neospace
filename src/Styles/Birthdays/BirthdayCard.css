@@ -3,12 +3,12 @@
   border-radius: 15px;              /* rounded corners */
   box-shadow: var(--box_shadow);
   padding: 35px;
-  width: calc(50% - 20px);          /* two cards per row minus gap */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 10px;
   transition: transform 0.3s ease;
+  flex-shrink: 0;                    /* prevent flex shrinking */
 }
 
 .birthdaycard:hover {
@@ -34,9 +34,10 @@
 
 /* Each card styling */
 .birthdaycard {
-  width: calc(50% - 20px);
   margin: 10px;
   box-sizing: border-box;
+  flex-shrink: 0;
+  width: calc(50% - 20px);
 }
 
 .userimg {
@@ -111,6 +112,8 @@
 /* Description section */
 .birthdaysec2 {
   margin-top: 10px;
+  flex: 1;                           /* take available space */
+  min-height: 0;                      /* allow shrinking if needed */
 }
 
 .description {
@@ -118,6 +121,9 @@
   font-size: var(--font-size-small);
   line-height: 1.4;
   color: #333;
+  word-wrap: break-word;              /* break long words */
+  overflow-wrap: break-word;           /* ensure text wraps */
+  hyphens: auto;                      /* add hyphens for long words */
 }
 
 /* Reviews / Contact buttons section */
@@ -138,7 +144,7 @@
 /* Responsive for mobile */
 @media (max-width: 850px) {
   .birthdaycard {
-    width: 100%;
+    width: calc(100% - 20px);
   }
 
   .birthdaysec1 {

@@ -26,10 +26,11 @@ import RateProduct from './Component/Rate_product.js';
 import Login from './Component/Auth/Login.js';
 import SignUp from './Component/Auth/signup.js';
 import ForgotPassword from './Component/Auth/forgot_password.js';
+import { AuthProvider } from './contexts/AuthContext';
 function App() {
   return (
     <>
-    
+    <AuthProvider>
     <BrowserRouter>
     <ScrollToTop />
     <Header/>
@@ -57,6 +58,7 @@ function App() {
       </Routes>
       <Footer/>
     </BrowserRouter>
+    </AuthProvider>
     
 
     </>
