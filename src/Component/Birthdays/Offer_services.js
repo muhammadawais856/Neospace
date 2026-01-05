@@ -3,11 +3,14 @@ import "../../Styles/Birthdays/Offer_services.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { birthdaysApi } from "../../services/birthdaysApi";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Offer_services() {
-
+    const navigate = useNavigate();
+    const { isAuthenticated, loading: authLoading } = useAuth();
+    const [hasExistingService, setHasExistingService] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [formData, setFormData] = useState({
         service_title: "",
         price: "",
@@ -21,11 +24,49 @@ function Offer_services() {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [checkingService, setCheckingService] = useState(true);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
+        // Wait for auth to finish loading before checking
+        if (authLoading) {
+            return;
+        }
+        
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+        checkExistingService();
         fetchUserData();
-    }, []);
+    }, [isAuthenticated, authLoading, navigate]);
+
+    async function checkExistingService() {
+        try {
+            setCheckingService(true);
+            const response = await birthdaysApi.getMyService();
+            if (response.has_service && response.service) {
+                // If there's a pending request, show message instead of form
+                if (response.has_pending_request && response.service.approved === 0) {
+                    setHasExistingService(true);
+                    setIsSubmitted(true);
+                    return;
+                }
+                // If approved service exists, allow editing
+                setHasExistingService(true);
+                setIsEditing(true);
+                setFormData({
+                    service_title: response.service.service_title || "",
+                    price: response.service.price?.toString() || "",
+                    description: response.service.description || ""
+                });
+            }
+        } catch (err) {
+            console.error("Error checking service:", err);
+        } finally {
+            setCheckingService(false);
+        }
+    }
 
     async function fetchUserData() {
         try {
@@ -45,17 +86,58 @@ function Offer_services() {
         try {
             setLoading(true);
             setError(null);
-            await birthdaysApi.offerService({
-                service_title: formData.service_title,
-                price: parseFloat(formData.price),
-                description: formData.description
-            });
-            setIsSubmitted(true);
+            
+            if (isEditing && hasExistingService) {
+                // Update existing service
+                await birthdaysApi.updateMyService({
+                    service_title: formData.service_title,
+                    price: parseFloat(formData.price),
+                    description: formData.description
+                });
+                setError(null);
+                alert("Service updated successfully!");
+            } else {
+                // Create new service
+                await birthdaysApi.offerService({
+                    service_title: formData.service_title,
+                    price: parseFloat(formData.price),
+                    description: formData.description
+                });
+                setIsSubmitted(true);
+            }
         } catch (err) {
             console.error("Error submitting service:", err);
-            setError("Failed to submit service. Please try again.");
+            const errorMessage = err.message || "Failed to submit service. Please try again.";
+            setError(errorMessage);
         } finally {
             setLoading(false);
+        }
+    }
+
+    async function handleDelete() {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete your service? This action cannot be undone."
+        );
+        
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            setDeleting(true);
+            setError(null);
+            
+            await birthdaysApi.deleteMyService();
+            alert("Service deleted successfully!");
+            // Redirect to birthdays page
+            navigate('/birthdays');
+        } catch (err) {
+            console.error("Error deleting service:", err);
+            const errorMessage = err.message || "Failed to delete service. Please try again.";
+            setError(errorMessage);
+            alert(errorMessage);
+        } finally {
+            setDeleting(false);
         }
     }
 
@@ -72,16 +154,42 @@ function Offer_services() {
                         <FaArrowLeft />
                     </div> 
                     <div className="offer-flex-column">
-                        <h3 className="offerservicesheadertitle">Offer Your Service</h3>
-                        <p className="offerserviceheadersubtitle">Join our community of service providers and reach more customers!</p>
+                        <h3 className="offerservicesheadertitle">{isEditing ? "Manage Your Service" : "Offer Your Service"}</h3>
+                        <p className="offerserviceheadersubtitle">{isEditing ? "Update your service information below" : "Join our community of service providers and reach more customers!"}</p>
                     </div>
                 </div>
 
-                {
-                    isLoggedIn ? <>
-
-                {
-                    !isSubmitted ? <>
+                {checkingService ? (
+                    <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+                ) : (
+                    <>
+                    {isSubmitted && hasExistingService ? (
+                        <div style={{ 
+                            padding: '60px 20px', 
+                            textAlign: 'center',
+                            maxWidth: '600px',
+                            margin: '0 auto'
+                        }}>
+                            <h3 style={{ marginBottom: '15px', fontSize: '24px', color: '#333' }}>
+                                You already have a service request
+                            </h3>
+                            <p style={{ 
+                                marginBottom: '30px', 
+                                fontSize: '16px', 
+                                color: '#666',
+                                lineHeight: '1.6'
+                            }}>
+                                Your birthday service request is currently pending approval. Once approved, you'll be able to manage your service here.
+                            </p>
+                            <button 
+                                className="primary-btn" 
+                                onClick={() => window.history.back()}
+                                style={{ padding: '12px 24px', fontSize: '16px' }}
+                            >
+                                Go Back
+                            </button>
+                        </div>
+                    ) : !isSubmitted ? <>
                     <div className="offerservicescontent">
                         {error && <div style={{ color: 'red', padding: '10px' }}>{error}</div>}
                         <div className="offerserviceleft">
@@ -113,11 +221,25 @@ function Offer_services() {
                             value={formData.description}
                             onChange={(e) => setFormData({...formData, description: e.target.value})}
                             />
-                            <div className="offerservicesec6">
+                            <div className="offerservicesec6" style={{ display: 'flex', gap: '10px', flexDirection: 'column' }}>
                                 <button className="primary-btn"
                                 onClick={handleSubmit}
-                                disabled={loading}
-                                >{loading ? "Submitting..." : "Submit"}</button>
+                                disabled={loading || deleting}
+                                >{loading ? (isEditing ? "Updating..." : "Submitting...") : (isEditing ? "Update Service" : "Submit")}</button>
+                                {isEditing && hasExistingService && (
+                                    <button 
+                                        className="primary-btn"
+                                        onClick={handleDelete}
+                                        disabled={loading || deleting}
+                                        style={{ 
+                                            backgroundColor: '#dc3545', 
+                                            borderColor: '#dc3545',
+                                            marginTop: '10px'
+                                        }}
+                                    >
+                                        {deleting ? "Deleting..." : "Delete Service"}
+                                    </button>
+                                )}
                             </div>
                         </div>
 
@@ -149,15 +271,18 @@ function Offer_services() {
                                 disabled 
                                 maxLength={20} 
                             />
-                            <p className="offerservicetitle">School</p> 
-                            <input 
-                                type="text" 
-                                className="offerservicestitleinput" 
-                                placeholder="NSTP"
-                                value={userData.school}
-                                disabled 
-                                maxLength={20} 
-                            />                  
+                            {userData.school && (
+                                <>
+                                    <p className="offerservicetitle">School</p> 
+                                    <input 
+                                        type="text" 
+                                        className="offerservicestitleinput" 
+                                        value={userData.school}
+                                        disabled 
+                                        maxLength={20} 
+                                    />
+                                </>
+                            )}                  
                         </div>
                     </div>   
                 </> : 
@@ -168,17 +293,8 @@ function Offer_services() {
                 </div>
                 </>
                 }
-            </> : <>
-            
-            <div className="submit-div">
-                    <h3>Oops! You are not Logged In</h3>
-                    <p>Please login to continue offering your services.</p>
-                    <button className="primary-btn"
-                    onClick={()=>{navigate('/login')}}
-                    >Login</button>
-                </div>
-            </>
-        }
+                </>
+                )}
 
             </div>
 

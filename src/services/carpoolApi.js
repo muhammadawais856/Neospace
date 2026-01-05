@@ -20,6 +20,21 @@ export const carpoolApi = {
   getOfferServiceFormData: async () => {
     return await api.get('/Carpool/offer_services');
   },
+
+  // Get my service
+  getMyService: async () => {
+    return await api.get('/Carpool/my_service');
+  },
+
+  // Update my service
+  updateMyService: async (serviceData) => {
+    return await api.put('/Carpool/my_service', serviceData);
+  },
+
+  // Delete my service
+  deleteMyService: async () => {
+    return await api.delete('/Carpool/my_service');
+  },
 };
 
 

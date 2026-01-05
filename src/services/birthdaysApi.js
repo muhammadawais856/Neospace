@@ -25,6 +25,21 @@ export const birthdaysApi = {
   getBirthdayReviews: async (freelancerId) => {
     return await api.get(`/Birthdays/birthdayreviews?freelancer_id=${freelancerId}`);
   },
+
+  // Get my service
+  getMyService: async () => {
+    return await api.get('/Birthdays/my_service');
+  },
+
+  // Update my service
+  updateMyService: async (serviceData) => {
+    return await api.put('/Birthdays/my_service', serviceData);
+  },
+
+  // Delete my service
+  deleteMyService: async () => {
+    return await api.delete('/Birthdays/my_service');
+  },
 };
 
 

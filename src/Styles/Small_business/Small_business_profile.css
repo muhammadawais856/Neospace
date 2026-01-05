@@ -13,19 +13,24 @@
   overflow-x: hidden !important;   /* prevent horizontal overflow */
 }
 
-/* Arrow left side */
+/* Arrow - now positioned inline */
 .business_profile_arrow {
-  position: absolute;
-  left: 14px ;
-  top: 70px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--font-size-h2);
   cursor: pointer;
+  margin-right: 15px;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  color: var(--text_color);
+  transition: all 0.3s ease;
 }
 
 /* Outer container */
 .business_profile_outer {
-  padding-left: 40px;
-  /* width: 100%; */
+  padding-left: 0;
   overflow-x: hidden;
 }
 
@@ -36,14 +41,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 30px;
   gap: 20px;
   width: 100%;
 }
 
-.business_profile_left,
-.business_profile_right {
+.business_profile_left {
+  display: flex;
+  align-items: center;
+  gap: 0;
   width: 50%;
+}
+
+.business_profile_header_text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.business_profile_right {
+  width: 30%;
 }
 
 /* Title styling */
@@ -52,11 +68,18 @@
   font-weight: bold;
   margin-bottom: 0px;
 }
+
 .business_profile_type {
   margin: 0px;
 }
-.business_profile_description{
-  margin-top: 40px;
+
+.business_profile_description_wrapper {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.business_profile_description {
+  margin-top: 0px;
 }
 
 /* -------------------------
@@ -218,39 +241,46 @@
 /* Optional: For very small screens (like mobile), 1 card per row */
 @media (max-width: 600px) {
   .business_profile_arrow {
-    left: 20px; /* same as your .business_profile_main padding-left */
-    top: 15px;  /* adjust vertical position if needed */
+    width: 32px;
+    height: 32px;
+    font-size: var(--font-size-h3);
+    margin-right: 10px;
   }
 
   .business_profile_item_card {
     grid-template-columns: 1fr; /* 1 card per row */
   }
-  .business_profile_outer{
+
+  .business_profile_outer {
     padding-left: 0px;
-
   }
+
   .business_profile_sec1 {
-  display: flex;
-  flex-direction: column !important; /* vertical stack */
-  justify-content: flex-start;       /* start from top */
-  align-items: flex-start;           /* align content to left */
-  width: 100% !important;            /* full width */
-  max-width: 100% !important;                    /* ensure no max-width restriction */
-  padding: 0;                         /* remove parent padding influence */
-  margin: 30px 0 0 0;                 /* top margin only */
-  gap: 20px;                          /* spacing between items */
-  flex-wrap: nowrap;                  /* no wrapping */
-  box-sizing: border-box;             /* include padding/border in width */
-}
-.business_profile_left, .business_profile_right {
-    width: 100%;
-}
+    display: flex;
+    flex-direction: row !important; /* Keep arrow and name in same row */
+    justify-content: space-between;
+    align-items: center;
+    width: 100% !important;
+    padding: 0;
+    margin: 30px 0 0 0;
+    gap: 20px;
+  }
 
-.business_profile_name{
-  margin-top: 20px;
-}
+  .business_profile_left {
+    display: flex;
+    align-items: center;
+    width: auto;
+    flex: 1;
+  }
 
+  .business_profile_right {
+    width: auto;
+  }
 
+  .business_profile_name {
+    margin-top: 0px;
+    font-size: var(--font-size-h3);
+  }
 }
 
 

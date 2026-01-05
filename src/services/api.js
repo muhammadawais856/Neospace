@@ -8,6 +8,10 @@ class ApiService {
 
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    
+    // Get auth token from localStorage
+    const token = localStorage.getItem('authToken');
+    
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -15,6 +19,11 @@ class ApiService {
       },
       ...options,
     };
+    
+    // Add Authorization header if token exists
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
 
     try {
       const response = await fetch(url, config);

@@ -5,11 +5,13 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { smallBusinessApi } from "../../services/smallBusinessApi";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 function SmallBusiness() {
   
 const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [startIdx, setStartIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState([]);
@@ -17,10 +19,25 @@ const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [selectedBusinessType, setSelectedBusinessType] = useState("");
   const [showOfferService, setShowOfferService] = useState(true);
+  const [isApproved, setIsApproved] = useState(false);
 
   useEffect(() => {
     fetchBusinesses();
-  }, [selectedBusinessType]);
+    if (isAuthenticated) {
+      checkMyService();
+    }
+  }, [selectedBusinessType, isAuthenticated]);
+
+  async function checkMyService() {
+    try {
+      const response = await smallBusinessApi.getMyService();
+      setShowOfferService(!response.has_service);
+      // Check if service is approved
+      setIsApproved(response.business?.approved === 1 || response.service?.approved === 1);
+    } catch (err) {
+      console.error("Error checking my service:", err);
+    }
+  }
 
   async function fetchBusinesses() {
     try {
@@ -111,10 +128,16 @@ const navigate = useNavigate();
       <div className="businessright">
             <button  
           onClick={() => {
-            if(showOfferService){
-              navigate('/businessofferservices');
+            if (isApproved) {
+              // Redirect to admin dashboard for approved stores with token
+              const token = localStorage.getItem('authToken');
+              if (token) {
+                window.open(`http://localhost:3002/login?token=${token}`, '_blank');
+              } else {
+                window.open('http://localhost:3002/login', '_blank');
+              }
             } else {
-              navigate('/mystore'); // Different navigation if false
+              navigate('/businessofferservices');
             }
           }}
           className="primary-btn2"
@@ -158,23 +181,39 @@ const navigate = useNavigate();
 
 
         <div className="businessbottom">
-          
-          {data.slice(startIdx, startIdx + 9).map(item => (
-            <BusinessCard
-              key={item.id}
-              id={item.id}
-              imgurl={item.img}
-              name={item.name}
-              type={item.business_type}
-              description={item.description}
-              rating={item.rating}
-            />
-          ))}
+          {data.length === 0 ? (
+            <div style={{ 
+              width: '100%',
+              margin: '0 auto',
+              textAlign: 'center', 
+              padding: '60px 10px',
+              color: '#666'
+            }}>
+              <h3 style={{ marginBottom: '10px', width: '100%', fontSize: '24px', color: '#333' }}>No businesses on board yet</h3>
+              <p style={{ fontSize: '16px' }}>Be the first to start your business and serve the community!</p>
+            </div>
+          ) : (
+            <>
+              {data.slice(startIdx, startIdx + 9).map(item => (
+                <BusinessCard
+                  key={item.id}
+                  id={item.id}
+                  imgurl={item.img}
+                  name={item.name}
+                  type={item.business_type}
+                  description={item.description}
+                  rating={item.rating}
+                />
+              ))}
+            </>
+          )}
         </div>
 
-        <div className="page-buttons">
-          {renderPages()}
-        </div>
+        {data.length > 0 && (
+          <div className="page-buttons">
+            {renderPages()}
+          </div>
+        )}
       </div>
     </div>
   );

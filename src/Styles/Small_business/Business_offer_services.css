@@ -54,7 +54,10 @@ position: absolute;
 
 /* Left card (image) */
 .business_offer_left_card {
-  flex: 1 1 50%;
+  flex: 0 0 50%;
+  width: 50%;
+  max-width: 50%;
+  min-width: 0;
 }
 
 .business_offer_left_card img {
@@ -63,11 +66,14 @@ position: absolute;
   object-fit: cover;
   border-radius: 10px 0px 0px 10px;
 }
-
+.business_offer_form{
+  width: 95%;
+}
 /* Right card (form) */
 .business_offer_right_card {
-  flex: 1 1 50%;
-  display: flex;
+  flex: 0 0 50%;
+  width: 100%;
+    display: flex;
   flex-direction: column;
   gap: 20px;
   box-sizing: border-box;

@@ -59,6 +59,7 @@
 
 .birthdayouter {
   box-sizing: border-box;
+  width: 100%;
 }
 
 .birthdaytop {

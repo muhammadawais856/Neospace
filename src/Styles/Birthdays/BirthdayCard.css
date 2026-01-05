@@ -28,8 +28,10 @@
 .birthdaybottom {
   display: flex;
   flex-wrap: wrap; 
-  margin: -10px; /* negative half of gap to neutralize outer spacing */
+  margin: -10px -80px; /* negative half of gap to neutralize outer spacing, negative horizontal to extend to main edges */
+  padding: 0 80px; /* compensate for negative margin to maintain content alignment */
   box-sizing: border-box;
+  width: calc(100% + 160px); /* Extend beyond parent to account for main container padding (80px * 2) */
 }
 
 /* Each card styling */
@@ -187,6 +189,11 @@
 }
 
 @media (max-width: 700px){
+  .birthdaybottom {
+    margin: -10px -15px; /* Adjust for smaller padding on mobile */
+    padding: 0 15px; /* Match main container padding on mobile */
+    width: calc(100% + 30px); /* Extend beyond parent (15px * 2) */
+  }
 
   .birthdaycard{
     padding: 25px;

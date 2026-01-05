@@ -10,12 +10,12 @@ import SignupModal from "../Common/SignupModal";
 
 function Profile() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  const [name, setName] = useState("Muhammad Awais Lateef");
-  const [email, setEmail] = useState("awais@gmail.com");
-  const [contact, setContact] = useState("+92 123 4567890");
-  const [address, setAddress] = useState("123 Main Street, City");
-  const [credits, setCredits] = useState(150);
+  const { isAuthenticated, user: authUser, updateUser } = useAuth();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [department, setDepartment] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [profileImage, setProfileImage] = useState(logo2);
   const [loading, setLoading] = useState(true);
@@ -24,18 +24,31 @@ function Profile() {
   const [showSignupModal, setShowSignupModal] = useState(false);
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    // Only fetch profile if user is authenticated
+    if (isAuthenticated && authUser) {
+      // Initialize with authenticated user data
+      setName(authUser.name || authUser.full_name || "");
+      setEmail(authUser.email || "");
+      if (authUser.img || authUser.profile_image) {
+        setProfileImage(authUser.img || authUser.profile_image);
+      }
+      // Fetch profile from API
+      fetchProfile();
+    } else {
+      setLoading(false);
+    }
+  }, [isAuthenticated, authUser]);
 
   async function fetchProfile() {
     try {
       setLoading(true);
       setError(null);
       const profile = await profileApi.getProfile();
-      setEmail(profile.email || "");
-      setContact(profile.contact || "");
-      setAddress(profile.address || "");
-      setCredits(profile.credits || 0);
+      // Update with profile data if available, otherwise keep auth user data
+      if (profile.email) setEmail(profile.email);
+      if (profile.contact) setContact(profile.contact);
+      if (profile.address) setAddress(profile.address);
+      if (profile.department) setDepartment(profile.department);
       if (profile.img) {
         setProfileImage(profile.img);
       }
@@ -44,7 +57,19 @@ function Profile() {
       }
     } catch (err) {
       console.error("Error fetching profile:", err);
-      setError("Failed to load profile. Please try again later.");
+      // If profile API fails, use auth user data as fallback
+      if (isAuthenticated && authUser) {
+        if (!name && (authUser.name || authUser.full_name)) {
+          setName(authUser.name || authUser.full_name);
+        }
+        if (!email && authUser.email) {
+          setEmail(authUser.email);
+        }
+      }
+      // Don't show error if we have auth user data to fall back on
+      if (!isAuthenticated || !authUser) {
+        setError("Failed to load profile. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -54,14 +79,25 @@ function Profile() {
     try {
       setSaving(true);
       setError(null);
-      await profileApi.updateProfile({
+      const updatedProfile =       await profileApi.updateProfile({
         img: profileImage,
-        credits: credits,
         email: email,
         contact: contact,
-        address: address
+        address: address,
+        department: department
       });
       setIsEditing(false);
+      
+      // Update AuthContext with new profile image
+      if (isAuthenticated && authUser && updateUser) {
+        const updatedUser = {
+          ...authUser,
+          img: updatedProfile.img || profileImage,
+          name: updatedProfile.name || authUser.name,
+          email: updatedProfile.email || authUser.email
+        };
+        updateUser(updatedUser);
+      }
     } catch (err) {
       console.error("Error updating profile:", err);
       setError("Failed to save profile. Please try again.");
@@ -209,12 +245,6 @@ function Profile() {
             </div>
           </div>
 
-          <div className="profile_credits">
-            <img src={logo} className="logo2" alt="logo" />
-            <p className="credits_value">{credits}</p>
-            <p className="credits">Credits Remaining</p>
-          </div>
-
           <div className="profile_details">
             <div className="profile_namefield">
                 <p className="profiletitle">Name</p>
@@ -259,6 +289,18 @@ function Profile() {
               className="profile_titleinput"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              disabled={!isEditing}
+              maxLength={100}
+            />
+          </div>
+
+          <div className="profile_contactfield">
+            <p className="profiletitle">School</p>
+            <input
+              type="text"
+              className="profile_titleinput"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
               disabled={!isEditing}
               maxLength={100}
             />

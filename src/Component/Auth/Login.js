@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../contexts/AuthContext";
+import { authApi } from "../../services/authApi";
 import "../../Styles/Auth/login.css";
 
 function Login() {
@@ -18,20 +19,34 @@ function Login() {
 
   const onSubmit = async (data) => {
     try {
-      // TODO: Replace with actual API call
-      // For now, simulate login
-      console.log("Login data:", data);
+      // Login API expects username, but we have email
+      // Try using email as username first (backend should handle this)
+      const loginResponse = await authApi.login(data.email, data.password);
       
-      // Mock token and user data - replace with actual API response
-      const mockToken = "mock_token_" + Date.now();
-      const mockUser = {
-        name: data.email.split('@')[0],
-        email: data.email,
-        credits: 0,
-        img: ""
-      };
+      // Get user data after login
+      try {
+        const userInfo = await authApi.getCurrentUser(loginResponse.access_token);
+        const userData = {
+          name: userInfo.full_name || userInfo.username || data.email.split('@')[0],
+          email: userInfo.email,
+          username: userInfo.username,
+          credits: 0,
+          img: ""
+        };
+        
+        login(loginResponse.access_token, userData);
+      } catch (userError) {
+        // If getting user info fails, use basic data from email
+        const userData = {
+          name: data.email.split('@')[0],
+          email: data.email,
+          username: data.email.split('@')[0],
+          credits: 0,
+          img: ""
+        };
+        login(loginResponse.access_token, userData);
+      }
       
-      login(mockToken, mockUser);
       toast.success("Login Successful!");
       
       // Check for redirect path
@@ -43,7 +58,7 @@ function Login() {
         navigate('/');
       }
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      toast.error(error.message || "Login failed. Please check your credentials.");
     }
   };
 

@@ -108,7 +108,7 @@ function VisitProfile() {
         },
         {
             id: 3,
-            service: "Average Price",
+            service: "Price",
             details: profileData.average_price.toString()
         }
     ];

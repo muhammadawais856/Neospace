@@ -1,19 +1,76 @@
 import { FaArrowLeft } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { smallBusinessApi } from "../../services/smallBusinessApi";
+import { useAuth } from "../../contexts/AuthContext";
 import "../../Styles/Small_business/Business_offer_services.css";
 
 function Business_offer_service(){
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
+    const [hasExistingService, setHasExistingService] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
         description: "",
         business_type: "",
-        additional_comments: ""
+        additional_comments: "",
+        image: ""
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [checkingService, setCheckingService] = useState(true);
+    const [imagePreview, setImagePreview] = useState("");
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+        checkExistingService();
+    }, [isAuthenticated, navigate]);
+
+    async function checkExistingService() {
+        try {
+            setCheckingService(true);
+            const response = await smallBusinessApi.getMyService();
+            if (response.has_service && response.service) {
+                // If service is approved, redirect to external dashboard
+                if (response.service.approved === 1 || response.business?.approved === 1) {
+                    const token = localStorage.getItem('authToken');
+                    if (token) {
+                      window.location.href = `http://localhost:3002/login?token=${token}`;
+                    } else {
+                      window.location.href = 'http://localhost:3002/login';
+                    }
+                    return;
+                }
+                // If there's a pending request, show message instead of form
+                if (response.has_pending_request && response.service.approved === 0) {
+                    setHasExistingService(true);
+                    setIsSubmitted(true);
+                    return;
+                }
+                // If approved service exists, allow editing (shouldn't reach here if approved)
+                setHasExistingService(true);
+                setIsEditing(true);
+                setFormData({
+                    name: response.service.name || "",
+                    description: response.service.description || "",
+                    business_type: response.service.business_type || "",
+                    additional_comments: response.service.additional_comments || "",
+                    image: response.business?.img || response.service.img || ""
+                });
+                if (response.business?.img || response.service.img) {
+                    setImagePreview(response.business?.img || response.service.img);
+                }
+            }
+        } catch (err) {
+            console.error("Error checking service:", err);
+        } finally {
+            setCheckingService(false);
+        }
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -23,26 +80,107 @@ function Business_offer_service(){
         }));
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64Image = reader.result;
+                setImagePreview(base64Image);
+                setFormData({...formData, image: base64Image});
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!isAuthenticated) {
+            navigate('/login');
+            return;
+        }
+
         try {
             setSubmitting(true);
-            await smallBusinessApi.offerService({
-                name: formData.name,
-                description: formData.description,
-                business_type: formData.business_type,
-                additional_comments: formData.additional_comments || ""
-            });
-            setIsSubmitted(true);
+            
+            if (isEditing && hasExistingService) {
+                // Update existing service
+                await smallBusinessApi.updateMyService({
+                    name: formData.name,
+                    description: formData.description,
+                    business_type: formData.business_type,
+                    additional_comments: formData.additional_comments || "",
+                    image: formData.image || ""
+                });
+                alert("Service updated successfully!");
+            } else {
+                // Create new service
+                await smallBusinessApi.offerService({
+                    name: formData.name,
+                    description: formData.description,
+                    business_type: formData.business_type,
+                    additional_comments: formData.additional_comments || "",
+                    image: formData.image || ""
+                });
+                // Re-check service status after submission
+                await checkExistingService();
+            }
         } catch (err) {
             console.error("Error submitting business offer:", err);
-            alert("Failed to submit business offer. Please try again.");
+            const errorMsg = err.message || "Failed to submit business offer. Please try again.";
+            alert(errorMsg);
         } finally {
             setSubmitting(false);
         }
     };
 
-    if (isSubmitted) {
+    if (checkingService) {
+        return (
+            <div className="business_offer_main">
+                <div className="business_offer_arrow" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
+                <div className="business_offer_outer">
+                    <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>
+                </div>
+            </div>
+        );
+    }
+
+    if (isSubmitted && hasExistingService) {
+        return (
+            <div className="business_offer_main">
+                <div className="business_offer_arrow" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
+                <div className="business_offer_outer">
+                    <div style={{ 
+                        padding: '60px 20px', 
+                        textAlign: 'center',
+                        maxWidth: '600px',
+                        margin: '0 auto'
+                    }}>
+                        <h3 style={{ marginBottom: '15px', fontSize: '24px', color: '#333' }}>
+                            Your request is under review
+                        </h3>
+                        <p style={{ 
+                            marginBottom: '30px', 
+                            fontSize: '16px', 
+                            color: '#666',
+                            lineHeight: '1.6'
+                        }}>
+                            Your business store request is currently pending approval. Once approved, you'll be able to manage your store here.
+                        </p>
+                        <button 
+                            className="primary-btn" 
+                            onClick={() => window.history.back()}
+                            style={{ padding: '12px 24px', fontSize: '16px' }}
+                        >
+                            Go Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (isSubmitted && !isEditing) {
         return (
             <div className="business_offer_main">
                 <div className="business_offer_arrow" onClick={() => {window.history.back()}}> <FaArrowLeft /></div>
@@ -63,8 +201,8 @@ function Business_offer_service(){
             <div className="business_offer_outer">
                 <div className="business_offer_sec1">
                 <div className="business_offer_title">
-                    <h3 className="business_offer_title_name">Start Your Business</h3>
-                    <p className="business_offer_desc">Your Journey to Success Begins Here</p>
+                    <h3 className="business_offer_title_name">{isEditing ? "Manage Your Store" : "Start Your Business"}</h3>
+                    <p className="business_offer_desc">{isEditing ? "Update your store information below" : "Your Journey to Success Begins Here"}</p>
 
                 </div>
                 </div>
@@ -76,10 +214,35 @@ function Business_offer_service(){
                 </div>
                 
                 {/* right */}
-                <form onSubmit={handleSubmit}>
                 <div className="business_offer_right_card">
+                <form className="business_offer_form" onSubmit={handleSubmit}>
                     <div className="business_offer_info">
                         <h3 className="business_offer_info_text">Online Store Information</h3>
+                    </div>
+                    <div className="business_offer_name">
+                        <p className="business_offer_name_text">Store Image</p>
+                        <div style={{ marginBottom: '15px' }}>
+                            {imagePreview && (
+                                <img 
+                                    src={imagePreview} 
+                                    alt="Store preview" 
+                                    style={{ 
+                                        width: '150px', 
+                                        height: '150px', 
+                                        objectFit: 'cover', 
+                                        borderRadius: '8px',
+                                        marginBottom: '10px',
+                                        display: 'block'
+                                    }} 
+                                />
+                            )}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                style={{ marginTop: '10px' }}
+                            />
+                        </div>
                     </div>
                     <div className="business_offer_name">
                         <p className="business_offer_name_text"> Name</p>
@@ -149,11 +312,11 @@ function Business_offer_service(){
                             className="primary-btn"
                             disabled={submitting}
                         >
-                            {submitting ? "Submitting..." : "Submit"}
+                            {submitting ? (isEditing ? "Updating..." : "Submitting...") : (isEditing ? "Update Store" : "Submit")}
                         </button>
                     </div>
-                </div>
                 </form>
+                </div>
                 </div>
 
             </div>

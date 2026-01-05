@@ -81,9 +81,13 @@ function Small_business_profile(){
   if (loading) {
     return (
       <div className="business_profile_main">
-        <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
         <div className="business_profile_outer">
-          <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+          <div className="business_profile_sec1">
+            <div className="business_profile_left">
+              <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
+              <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -92,10 +96,14 @@ function Small_business_profile(){
   if (error || !profileData) {
     return (
       <div className="business_profile_main">
-        <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
         <div className="business_profile_outer">
-          <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
-            {error || "Business profile not found"}
+          <div className="business_profile_sec1">
+            <div className="business_profile_left">
+              <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
+              <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
+                {error || "Business profile not found"}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -105,7 +113,6 @@ function Small_business_profile(){
     return(
         <>
         <div className="business_profile_main">
-            <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
             <div className="business_profile_outer">
                 {/*----------------------------------------
                                 Section 1
@@ -113,16 +120,18 @@ function Small_business_profile(){
                 */}
                 <div className="business_profile_sec1">
                     <div className="business_profile_left">
-                        <h3 className="business_profile_name">{profileData.name}</h3>
-                        <p className="business_profile_type">{profileData.business_type}</p>
-                        <p className="business_profile_description">{profileData.description}</p>
-
+                        <div className="business_profile_arrow" onClick={() => navigate("/smallbusiness")}> <FaArrowLeft /></div>
+                        <div className="business_profile_header_text">
+                            <h3 className="business_profile_name">{profileData.name}</h3>
+                            <p className="business_profile_type">{profileData.business_type}</p>
+                        </div>
                     </div>
                     <div className="business_profile_right">
                         <Ratingcard rating={profileData.rating} ordersCompleted={profileData.order_completed} />
-
                     </div>
-
+                </div>
+                <div className="business_profile_description_wrapper">
+                    <p className="business_profile_description">{profileData.description}</p>
                 </div>
                 {/*----------------------------------------
                                 Section 2

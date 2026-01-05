@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCar } from "react-icons/fa";
 import { carpoolApi } from "../../services/carpoolApi";
+import { useAuth } from "../../contexts/AuthContext";
 // Import advertisement images
 import adDesktopCar from "../../assets/ad-desktopcar.png";
 import adMobileCar from "../../assets/ad-mobilecar.png";
@@ -17,15 +18,29 @@ import adMobileCar from "../../assets/ad-mobilecar.png";
 function Carpool() {
 
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [startIdx, setStartIndex] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasMyService, setHasMyService] = useState(false);
 
   useEffect(() => {
     fetchFreelancers();
-  }, []);
+    if (isAuthenticated) {
+      checkMyService();
+    }
+  }, [isAuthenticated]);
+
+  async function checkMyService() {
+    try {
+      const response = await carpoolApi.getMyService();
+      setHasMyService(response.has_service);
+    } catch (err) {
+      console.error("Error checking my service:", err);
+    }
+  }
 
   async function fetchFreelancers() {
     try {
@@ -140,29 +155,47 @@ function Carpool() {
             </div>
             <div className="birthdayright">
               <button onClick={() => { navigate('/Carpoolofferservices') }}
-                className="primary-btn2">Offer Services</button>
+                className="primary-btn2">{hasMyService ? "Manage My Service" : "Offer Services"}</button>
             </div>
           </div>
 
-          <div className="birthdaybottom">
-            {data.slice(startIdx, startIdx + 10).map((item) => (
-              <BirthdayCard
-                key={item.id}
-                id={item.id}
-                name={item.name}
-                location={item.location}
-                description={item.description}
-                car={item.vehicle_type === "Car"}
-                available={`${item.seats_available} seat${item.seats_available > 1 ? 's' : ''} available`}
-                image={item.image}
-              />
-            ))}
-          </div>
-
-          <div className="page-buttons">
-            {renderPages()}
-          </div>
+          {data.length > 0 ? (
+            <>
+              <div className="birthdaybottom">
+                {data.slice(startIdx, startIdx + 10).map((item) => (
+                  <BirthdayCard
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    location={item.location}
+                    description={item.description}
+                    car={item.vehicle_type === "Car"}
+                    available={`${item.seats_available} seat${item.seats_available > 1 ? 's' : ''} available`}
+                    image={item.image}
+                  />
+                ))}
+              </div>
+              <div className="page-buttons">
+                {renderPages()}
+              </div>
+            </>
+          ) : null}
         </div>
+
+        {data.length === 0 && (
+          <div style={{ width: '100%' }}>
+            <div style={{ 
+              width: '80%',
+              margin: '0 auto',
+              textAlign: 'center', 
+              padding: '60px 20px',
+              color: '#666'
+            }}>
+              <h3 style={{ marginBottom: '10px', fontSize: '24px', color: '#333' }}>No carpool services on board yet</h3>
+              <p style={{ fontSize: '16px' }}>Be the first to offer carpool services and help others travel together!</p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

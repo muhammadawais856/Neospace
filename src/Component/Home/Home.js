@@ -3,6 +3,7 @@ import Card from "./Card";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { homeApi } from "../../services/homeApi";
+import { profileApi } from "../../services/profileApi";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../Styles/Home/inner1.css"
 import "../../Styles/Home/inner2.css"
@@ -23,19 +24,38 @@ function Home(){
 
     useEffect(() => {
         if (isAuthenticated && authUser) {
-            // Use authenticated user data
+            // Fetch latest profile data to get updated image
+            fetchProfileData();
+        } else {
+            // Try to fetch from API or localStorage
+            fetchHomeData();
+        }
+    }, [isAuthenticated, authUser]);
+
+    async function fetchProfileData() {
+        try {
+            setLoading(true);
+            // Fetch latest profile data
+            const profile = await profileApi.getProfile();
+            setUserData({
+                name: profile.name || authUser.name || authUser.full_name || "User",
+                email: profile.email || authUser.email || "",
+                credits: authUser.credits || 0,
+                img: profile.img || authUser.img || authUser.profile_image || ""
+            });
+        } catch (err) {
+            console.error("Error fetching profile:", err);
+            // Fallback to auth user data
             setUserData({
                 name: authUser.name || authUser.full_name || "User",
                 email: authUser.email || "",
                 credits: authUser.credits || 0,
                 img: authUser.img || authUser.profile_image || ""
             });
+        } finally {
             setLoading(false);
-        } else {
-            // Try to fetch from API or localStorage
-            fetchHomeData();
         }
-    }, [isAuthenticated, authUser]);
+    }
 
     async function fetchHomeData() {
         try {

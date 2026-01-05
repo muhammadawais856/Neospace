@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../contexts/AuthContext";
+import { authApi } from "../../services/authApi";
 import "../../Styles/Auth/signup.css";
 
 function SignUp() {
@@ -28,12 +29,25 @@ function SignUp() {
   };
 
   // Handle signup form submission
-  const onSubmit = (data) => {
-    console.log("SignUp data:", data);
-    // Store form data for OTP verification
-    sessionStorage.setItem('signupFormData', JSON.stringify(data));
-    toast.success("Account created successfully! Enter OTP sent to your email.");
-    setStep("otp");
+  const onSubmit = async (data) => {
+    try {
+      // Call signup API
+      const response = await authApi.signup({
+        email: data.email,
+        username: data.email.split('@')[0], // Generate username from email
+        password: data.password,
+        fullName: data.fullName,
+        contact: data.contact || "",
+        address: "" // Address field not in signup form, can be added later
+      });
+      
+      // Store form data for OTP verification
+      sessionStorage.setItem('signupFormData', JSON.stringify(data));
+      toast.success(response.message || "OTP sent to your email. Please verify to complete signup.");
+      setStep("otp");
+    } catch (error) {
+      showError(error.message || "Signup failed. Please try again.");
+    }
   };
 
   // Handle validation for signup form
@@ -83,39 +97,31 @@ function SignUp() {
     }
 
     const enteredOtp = otpValues.join("");
-    if (enteredOtp === "123456") { // replace with real OTP logic
-      try {
-        // TODO: Replace with actual API call
-        // For now, simulate successful signup
-        const formData = JSON.parse(sessionStorage.getItem('signupFormData') || '{}');
-        
-        // Mock token and user data - replace with actual API response
-        const mockToken = "mock_token_" + Date.now();
-        const mockUser = {
-          name: formData.fullName || "User",
-          email: formData.email || "",
-          credits: 0,
-          img: ""
-        };
-        
-        login(mockToken, mockUser);
-        sessionStorage.removeItem('signupFormData');
-        
-        toast.success("Account created successfully!");
-        
-        // Check for redirect path
-        const redirectPath = sessionStorage.getItem('signupRedirect');
-        if (redirectPath) {
-          sessionStorage.removeItem('signupRedirect');
-          navigate(redirectPath);
-        } else {
-          navigate('/');
-        }
-      } catch (error) {
-        showError("Signup failed. Please try again.");
-      }
-    } else {
-      showError("Invalid OTP, please try again");
+    try {
+      const formData = JSON.parse(sessionStorage.getItem('signupFormData') || '{}');
+      
+      // Verify OTP with backend
+      const response = await authApi.verifyOtp(formData.email, enteredOtp);
+      
+      // Backend returns access token, so we can login directly
+      const userData = {
+        name: response.user.full_name || response.user.username || "User",
+        email: response.user.email,
+        username: response.user.username,
+        credits: 0,
+        img: ""
+      };
+      
+      // Login with the token from verify-otp response
+      login(response.access_token, userData);
+      
+      sessionStorage.removeItem('signupFormData');
+      toast.success("Account created successfully!");
+      
+      // Always redirect to home page after signup
+      navigate('/');
+    } catch (error) {
+      showError(error.message || "Invalid OTP, please try again");
     }
   };
 
