@@ -15,9 +15,10 @@ BACK ARROW
 .arrow_nustfruita {
     position: absolute;
     left: 30px;
-    top: 30px;
-    font-size: var(--font-size-h4);
+    top: 60px;
+    font-size: var(--font-size-h3);
     cursor: pointer;
+    
 }
 
 /* ===============================
@@ -31,7 +32,8 @@ OUTER WRAPPER
 
 .nustfruita_maintitle h3 {
     margin-left: 0px;
-    font-size: var(--font-size-h4);
+    font-size: var(--font-size-h3);
+
 }
 
 /* ===============================
@@ -191,7 +193,7 @@ RESPONSIVE STYLES FOR 500px
     }
 
     .arrow_nustfruita {
-        top: 10px;
+        top: 25px;
         left: 20px;
     }
 

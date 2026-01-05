@@ -382,3 +382,11 @@
   transform: translateY(-5px);
   box-shadow: var(--box_shadow);
 }
+
+@media (max-width: 500px) {
+  .carpoolcard {
+    padding: 25px;
+    margin: 0px;
+  }
+
+}
